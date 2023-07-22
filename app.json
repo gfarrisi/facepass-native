@@ -25,6 +25,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "e60e7b5f-ed46-4d3e-84d0-bb0285eb31f4"
+      }
+    },
+    "owner": "ellie.bello"
   }
 }
