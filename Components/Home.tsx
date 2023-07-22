@@ -16,20 +16,20 @@ export type Props = {
 
 const dotsPositions = [
   {
-    x: -100,
-    y: 70,
+    left: -100,
+    top: 0,
   },
   {
-    x: 400,
-    y: 60,
+    right: -100,
+    top: 150,
   },
   {
-    x: '-10%',
-    y: 100,
+    left: -100,
+    bottom: 100,
   },
   {
-    x: '150%',
-    y: 100,
+    right: -100,
+    bottom: -50,
   },
 ];
 
@@ -50,15 +50,23 @@ const Home: React.FC<Props> = (props) => {
           </Pressable>
         </View>
       </View>
-      <View style={styles.dots}>
+      <>
         {dotsPositions?.map((dots) => {
           return (
-            <View style={{ top: dots.y, left: dots.x }}>
+            <View
+              style={{
+                ...styles.dots,
+                top: dots.top,
+                left: dots.left,
+                right: dots.right,
+                bottom: dots.bottom,
+              }}
+            >
               <Dots size={230} />
             </View>
           );
         })}
-      </View>
+      </>
     </>
   );
 };
