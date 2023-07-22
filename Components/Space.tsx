@@ -1,3 +1,5 @@
+import { View } from 'react-native';
+
 interface SpaceProps {
   size?: number;
   h?: number;
@@ -7,7 +9,7 @@ interface SpaceProps {
 function Space(props: SpaceProps) {
   const { size, h, w } = props;
   return (
-    <div
+    <View
       style={{
         height: 8 * (h || size || 1),
         width: 8 * (w || size || 1),
