@@ -1,5 +1,5 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { createAction } from "@reduxjs/toolkit";
+import { PayloadAction, createReducer, createSlice } from '@reduxjs/toolkit';
+import { createAction } from '@reduxjs/toolkit';
 
 interface InitialState {
   isLoading: boolean;
@@ -8,47 +8,42 @@ interface InitialState {
   error: string;
 }
 
-export const setIsLoading = createAction<boolean, "setIsLoadingTransaction">(
-  "setIsLoadingTransaction"
+export const setIsLoading = createAction<boolean, 'setIsLoadingTransaction'>(
+  'setIsLoadingTransaction',
 );
 
 export const setTransactionSignature = createAction<
   string,
-  "setTransactionSignature"
->("setTransactionSignature");
+  'setTransactionSignature'
+>('setTransactionSignature');
 
-export const setTransactionHash = createAction<string, "setTransactionHash">(
-  "setTransactionHash"
+export const setTransactionHash = createAction<string, 'setTransactionHash'>(
+  'setTransactionHash',
 );
 
-export const setError = createAction<string, "setTransactionError">(
-  "setTransactionError"
+export const setError = createAction<string, 'setTransactionError'>(
+  'setTransactionError',
 );
 
 const initialState: InitialState = {
   isLoading: false,
-  transactionSignature: "",
-  transactionHash: "",
-  error: "",
+  transactionSignature: '',
+  transactionHash: '',
+  error: '',
 };
 
-export const transactionSlice = createSlice({
-  name: "transaction",
-  initialState,
-  reducers: {
-    [setIsLoading.type]: (state, action: PayloadAction<boolean>) => {
+export const transactionSlice = createReducer(initialState, (builder) => {
+  builder
+    .addCase(setIsLoading, (state, action) => {
       state.isLoading = action.payload;
-    },
-    [setTransactionSignature.type]: (state, action: PayloadAction<string>) => {
+    })
+    .addCase(setTransactionSignature, (state, action) => {
       state.transactionSignature = action.payload;
-    },
-    [setTransactionHash.type]: (state, action: PayloadAction<string>) => {
+    })
+    .addCase(setTransactionHash, (state, action) => {
       state.transactionHash = action.payload;
-    },
-    [setError.type]: (state, action: PayloadAction<string>) => {
+    })
+    .addCase(setError, (state, action) => {
       state.error = action.payload;
-    },
-  },
+    });
 });
-
-export default transactionSlice.reducer;
