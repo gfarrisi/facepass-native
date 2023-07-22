@@ -7,13 +7,15 @@ import { QRCode } from './Components/Icons/QRCode';
 import { Dots } from './Components/Icons/Dots';
 import Space from './Components/Space';
 import Home from './Components/Home';
+import AppProvider from './providers/AppProvider';
 
 export type Props = {};
 
 const App: React.FC<Props> = ({}) => {
   const [view, setView] = useState('home');
   return (
-    <View style={styles.app}>
+    <AppProvider>
+     <View style={styles.app}>
       {view === 'home' ? (
         <Home view={view} setView={setView} />
       ) : view === 'qrCamera' ? (
@@ -21,7 +23,9 @@ const App: React.FC<Props> = ({}) => {
       ) : (
         <></>
       )}
-    </View>
+    </View> 
+    </AppProvider>
+    
   );
 };
 
