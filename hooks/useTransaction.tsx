@@ -19,13 +19,15 @@ interface ISendTransaction {
   jsonrpc: string;
 }
 
-const useSendTransaction = () => {
+const useTransaction = () => {
   const dispatch = useDispatch();
 
   const error = useSelector((state: RootState) => state.transaction.error);
+
   const isLoadingTransaction = useSelector(
-    (state: RootState) => state.transaction,
+    (state: RootState) => state.transaction.isLoading,
   );
+
   const transactionSignature = useSelector(
     (state: RootState) => state.transaction.transactionSignature,
   );
@@ -58,4 +60,4 @@ const useSendTransaction = () => {
   };
 };
 
-export default useSendTransaction;
+export default useTransaction;
