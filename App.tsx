@@ -1,22 +1,20 @@
 import React, { useState } from 'react';
-import { View } from 'react-native';
-import styles from './styles';
 import Home from './Components/Home';
 import AppProvider from './providers/AppProvider';
 
+export type Views = 'home' | 'qrCamera' | 'frontCamera' | 'sucesss';
+
 const App: React.FC = () => {
-  const [view, setView] = useState('home');
+  const [view, setView] = useState<Views>('home');
   return (
     <AppProvider>
-      <View style={styles.app}>
-        {view === 'home' ? (
-          <Home view={view} setView={setView} />
-        ) : view === 'qrCamera' ? (
-          <></>
-        ) : (
-          <></>
-        )}
-      </View>
+      {view === 'home' ? (
+        <Home view={view} setView={setView} />
+      ) : view === 'qrCamera' ? (
+        <></>
+      ) : (
+        <></>
+      )}
     </AppProvider>
   );
 };

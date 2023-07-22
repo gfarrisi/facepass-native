@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   app: {
     backgroundColor: 'black',
+    background: 'linear-gradient(45deg, #4c669f, #3b5998, #192f6a)',
     width: '100%',
     color: 'white',
     position: 'relative',
@@ -20,12 +21,9 @@ const styles = StyleSheet.create({
   dots: {
     position: 'absolute',
   },
-  //    blur: {
-  //     `--gradient-start`: `#6DE195`,
-  //     `--gradient-start-text`: `#6DE195`,
-  //     `--gradient-end`: `#C4E759`,
-  //     `--gradient-end-text`: `#C4E759`,
-  //    }
+  linearGradient: {
+    flex: 1,
+  },
 });
 
 export default styles;

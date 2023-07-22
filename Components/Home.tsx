@@ -1,13 +1,21 @@
 import React from 'react';
-import { Button, Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import {
+  Button,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  Platform,
+} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import { Icon } from './Icons/Icon';
 import { Logo } from './Icons/Logo';
 import { QRCode } from './Icons/QRCode';
 import { Dots } from './Icons/Dots';
 import Space from './Space';
 import styles from '../styles';
-
-type Views = 'home' | 'qrCamera' | 'frontCamera' | 'sucesss';
+import { Views } from '../App';
 
 export type Props = {
   view: Views;
@@ -20,8 +28,8 @@ const dotsPositions = [
     top: 0,
   },
   {
-    right: -100,
-    top: 150,
+    right: -150,
+    top: 250,
   },
   {
     left: -100,
@@ -32,6 +40,8 @@ const dotsPositions = [
     bottom: -50,
   },
 ];
+
+const isWeb = Platform.OS === 'web';
 
 const Home: React.FC<Props> = (props) => {
   const { view, setView } = props;
