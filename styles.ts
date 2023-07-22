@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'white',
-    fontFamily: 'Tenor Sans',
+    // fontFamily: 'Serif',
     fontSize: 17,
     zIndex: 10,
   },
