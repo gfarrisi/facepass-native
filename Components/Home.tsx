@@ -54,7 +54,7 @@ const Home: React.FC<Props> = (props) => {
       </View>
       <View>
         <View style={styles.container}>
-          <Text style={styles.text}>SCAN HERE</Text>
+          <Text style={styles.text}>SCAN HERE TO CONNECT WALLET</Text>
           {/* <Space h={1} /> */}
           <Pressable
             onPress={() => setView(isWeb ? 'frontCamera' : 'qrCamera')}
@@ -75,10 +75,10 @@ const Home: React.FC<Props> = (props) => {
                 left: dots.left,
                 right: dots.right,
                 bottom: dots.bottom,
-                opacity: 0.6,
+                opacity: 0.4,
               }}
             >
-              <Dots size={210} />
+              <Dots size={230} />
             </View>
           );
         })}

@@ -34,6 +34,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     zIndex: 100,
   },
+  flex: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   dots: {
     position: 'absolute',
   },
