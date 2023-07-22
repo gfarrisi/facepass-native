@@ -33,25 +33,23 @@ export type Props = {
 const FaceScan: React.FC<Props> = (props) => {
   const { setView } = props;
   const [type, setType] = useState(CameraType.front);
-  //   const [address, setAddress] = useState<string>();
   const { address, setEvmAddress } = useEvmAddress();
-
-  //   const evmAddress = await getEvmAddress()
 
   const message = address
     ? `SCANNING TO COMPLETE TRANSACTION`
     : `SCAN TO CREATE WALLET`;
 
-  const resolveFaceData = (faceData?: string) => {
+  const resolveFaceData = (faceData: string) => {
     if (!address) {
       //create wallet
-      const account = connectToWallet('');
+      const account = connectToWallet(faceData);
       setEvmAddress(address);
       // setPublicKey(account.address);
-      setView('qrCamera');
+      setView('waiting');
     } else {
       //call send transaction
       faceData && signMessage(faceData);
+      setView('waiting');
     }
   };
 
@@ -77,7 +75,7 @@ const FaceScan: React.FC<Props> = (props) => {
           <Pressable onPress={() => setView('home')}>
             <Text style={styles.text}>Back</Text>
           </Pressable>
-          <Pressable onPress={() => setView('home')}>
+          <Pressable onPress={() => resolveFaceData('123')}>
             <Text style={styles.text}>Complete</Text>
           </Pressable>
         </View>

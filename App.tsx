@@ -6,6 +6,7 @@ import Home from './Components/Home';
 import AppProvider from './providers/AppProvider';
 import FaceScan from './Components/FaceScan';
 import { QRCamera } from './Components/QRCamera';
+import { Waiting } from './Components/Waitings';
 
 export type Views = 'home' | 'qrCamera' | 'frontCamera' | 'waiting' | 'sucesss';
 
@@ -20,7 +21,7 @@ const App: React.FC = () => {
       ) : view === 'frontCamera' ? (
         <FaceScan setView={setView} />
       ) : view === 'waiting' ? (
-        <FaceScan setView={setView} />
+        <Waiting setView={setView} />
       ) : (
         <></>
       )}
