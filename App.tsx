@@ -1,22 +1,23 @@
 import React, { useState } from 'react';
-import { Button, Image, Pressable, StyleSheet, Text, View } from 'react-native';
-import styles from './styles';
-import { Icon } from './Components/Icons/Icon';
-import { Logo } from './Components/Icons/Logo';
-import { QRCode } from './Components/Icons/QRCode';
-import { Dots } from './Components/Icons/Dots';
-import Space from './Components/Space';
 import Home from './Components/Home';
 import AppProvider from './providers/AppProvider';
-import WalletConnect from './Components/WalletConnect/WalletConnect';
+import FaceScan from './Components/FaceScan';
 
-export type Props = {};
+export type Views = 'home' | 'qrCamera' | 'frontCamera' | 'sucesss';
 
-const App: React.FC<Props> = ({}) => {
-  const [view, setView] = useState('home');
+const App: React.FC = () => {
+  const [view, setView] = useState<Views>('home');
   return (
     <AppProvider>
-      <WalletConnect />
+      {view === 'home' ? (
+        <Home view={view} setView={setView} />
+      ) : view === 'qrCamera' ? (
+        <></>
+      ) : view === 'frontCamera' ? (
+        <FaceScan setView={setView} />
+      ) : (
+        <></>
+      )}
     </AppProvider>
   );
 };

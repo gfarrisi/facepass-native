@@ -68,14 +68,6 @@ const styles = StyleSheet.create({
     width: '100%',
     padding: '50px',
   },
-  input: {
-    borderWidth: 2,
-    borderRadius: 12,
-    borderColor: 'blue',
-    padding: '12px',
-    width: '100%',
-    marginTop: '28px',
-  },
   greeting: {
     display: 'flex',
     alignItems: 'center',
