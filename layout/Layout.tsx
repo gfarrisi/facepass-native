@@ -1,12 +1,13 @@
-import React, { ReactNode } from "react";
-import { View } from "react-native";
+import React, { ReactNode } from 'react';
+import { View } from 'react-native';
+import styles from '../styles';
 
 interface ILayout {
   children: ReactNode;
 }
 
 const Layout = ({ children }: ILayout) => {
-  return <View>{children}</View>;
+  return <View style={styles.app}>{children}</View>;
 };
 
 export default Layout;

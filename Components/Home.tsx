@@ -15,8 +15,7 @@ import { QRCode } from './Icons/QRCode';
 import { Dots } from './Icons/Dots';
 import Space from './Space';
 import styles from '../styles';
-
-type Views = 'home' | 'qrCamera' | 'frontCamera' | 'sucesss';
+import { Views } from '../App';
 
 export type Props = {
   view: Views;
@@ -48,8 +47,6 @@ const Home: React.FC<Props> = (props) => {
   const { view, setView } = props;
   return (
     <>
-      {/* <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.linearGradient} start={{x: 0, y:0}} end={{x: 100, y:100}}> */}
-
       <View style={styles.container}>
         <Icon size={150} />
         <Logo size={150} />
@@ -80,7 +77,6 @@ const Home: React.FC<Props> = (props) => {
           );
         })}
       </>
-      {/* </LinearGradient> */}
     </>
   );
 };
