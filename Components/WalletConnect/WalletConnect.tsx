@@ -75,7 +75,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'lightblue',
     width: '100%',
-    padding: '50px',
   },
   greeting: {
     display: 'flex',
