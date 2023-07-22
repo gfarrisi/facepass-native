@@ -15,7 +15,8 @@ const WalletConnect = () => {
     wsUri,
     reset,
   } = useSession();
-
+  const address = '';
+  const wsUriFinal = ``;
   console.log(`
   evmAddress: ${evmAddress}
   isInitialized: ${isInitialized}
@@ -25,7 +26,15 @@ const WalletConnect = () => {
   `);
   const dispatch = useDispatch();
   useEffect(() => {
+    if (!wsUri || !evmAddress) return;
     onInitialize();
+  }, [evmAddress, wsUri]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(setEvmAddress(address));
+      dispatch(setWsUri(wsUriFinal));
+    }, 3500);
   }, []);
 
   const onPress = () => {
@@ -66,7 +75,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'lightblue',
     width: '100%',
-    padding: '50px',
   },
   greeting: {
     display: 'flex',

@@ -1,3 +1,6 @@
+import '@walletconnect/react-native-compat';
+import '@ethersproject/shims';
+import 'fast-text-encoding';
 import React, { useState } from 'react';
 import Home from './Components/Home';
 import AppProvider from './providers/AppProvider';

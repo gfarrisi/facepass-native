@@ -101,26 +101,26 @@ const useSession = () => {
       const { topic, params, id } = event;
       const { request } = params;
       const { method } = request;
-
-      if (method !== 'eth_sendTransaction') {
+      console.log(event.params.request.method);
+      if (method === 'eth_sendTransaction') {
         try {
-          setIsLoadingTransaction(true);
+          dispatch(setIsLoadingTransaction(true));
 
-          if (txError) setTransactionError('');
-          if (transactionSignature) setTransactionSignature('');
+          if (txError) dispatch(setTransactionError(''));
+          if (transactionSignature) dispatch(setTransactionSignature(''));
 
           const txResponse = await sendTransaction({
             from: '0x',
             to: '0x',
             data: '0x',
           });
-
+          console.log('🧼 txResponse', txResponse);
           await wallet.respondSessionRequest({
             topic,
             response: txResponse,
           });
 
-          setTransactionSignature(txResponse.result);
+          dispatch(setTransactionSignature(txResponse.result));
         } catch (err) {
           const errMessage =
             '❌ Failed to Sign Transaction. Please try again later.';
@@ -137,9 +137,9 @@ const useSession = () => {
             },
           });
 
-          setTransactionError(errMessage);
+          dispatch(setTransactionError(errMessage));
         } finally {
-          setIsLoadingTransaction(false);
+          dispatch(setIsLoadingTransaction(false));
         }
       }
     });
@@ -156,7 +156,7 @@ const useSession = () => {
 
     if (!pairing) return;
 
-    setWallet(wallet);
+    dispatch(setWallet(wallet));
   };
 
   return {
