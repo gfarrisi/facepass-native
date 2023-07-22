@@ -8,6 +8,10 @@ const styles = StyleSheet.create({
     color: 'white',
     position: 'relative',
   },
+  text: {
+    color: 'white',
+    fontFamily: 'Tenor Sans',
+  },
   logo: {
     width: 166,
     height: 166,
@@ -24,6 +28,9 @@ const styles = StyleSheet.create({
   linearGradient: {
     flex: 1,
   },
+  camera: {},
+  buttonContainer: {},
+  button: {},
 });
 
 export default styles;
