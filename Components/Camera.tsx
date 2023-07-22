@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
 import { BarCodeScannedCallback, BarCodeScanner } from 'expo-barcode-scanner';
+import useSession from '../hooks/useSession';
 
 export const QRCamera: React.FC = () => {
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [scanned, setScanned] = useState(false);
+  const { setWsUri } = useSession();
 
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
@@ -17,6 +19,7 @@ export const QRCamera: React.FC = () => {
 
   const handleBarCodeScanned: BarCodeScannedCallback = ({ type, data }) => {
     setScanned(true);
+    setWsUri(data);
     //@ts-ignore
     alert(`Bar code with type ${type} and data ${data} has been scanned!`);
   };
