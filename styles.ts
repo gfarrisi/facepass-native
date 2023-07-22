@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   app: {
     backgroundColor: 'black',
-    background: 'linear-gradient(45deg, #4c669f, #3b5998, #192f6a)',
+    // background: 'linear-gradient(45deg, #4c669f, #3b5998, #192f6a)',
     width: '100%',
     height: '100%',
     color: 'white',
@@ -12,8 +12,15 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'white',
-    // fontFamily: 'Serif',
+    fontFamily: 'serif',
     fontSize: 17,
+    zIndex: 10,
+  },
+  textAddress: {
+    color: 'white',
+    fontFamily: 'helvetica',
+    fontSize: 14,
+    fontWeight: '600',
     zIndex: 10,
   },
   logo: {
@@ -42,6 +49,12 @@ const styles = StyleSheet.create({
   dots: {
     position: 'absolute',
   },
+  banner: {
+    backgroundColor: 'gray',
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   linearGradient: {
     flex: 1,
     position: 'absolute',
@@ -60,6 +73,7 @@ const styles = StyleSheet.create({
     // borderStyle: 'dot',
     // borderWidth: 5,
   },
+
   buttonContainer: {},
   button: {},
 });

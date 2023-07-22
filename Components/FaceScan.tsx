@@ -46,10 +46,10 @@ const FaceScan: React.FC<Props> = (props) => {
       console.log('account___', { account });
       setEvmAddress(account.address);
       // setPublicKey(account.address);
-      setView('waiting');
+      setView('qrCamera');
     } else {
       //call send transaction
-      faceData && signMessage(faceData);
+      signMessage(faceData);
       setView('waiting');
     }
   };
