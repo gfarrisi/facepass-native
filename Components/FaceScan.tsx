@@ -31,7 +31,7 @@ export type Props = {
 const FaceScan: React.FC<Props> = (props) => {
   const { setView } = props;
   const [type, setType] = useState(CameraType.front);
-  const faceData = 123;
+  const faceData = '123';
 
   useEffect(() => {
     setTimeout(function () {
