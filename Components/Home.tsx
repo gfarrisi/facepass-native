@@ -56,9 +56,8 @@ const Home: React.FC<Props> = (props) => {
         <View style={styles.container}>
           <Text style={styles.text}>SCAN HERE</Text>
           <Space h={2} />
-          <Pressable onPress={() => setView('frontCamera')}>
+          <Pressable onPress={() => setView('qrCamera')}>
             <QRCode size={50} />
-            <Text style={styles.text}>SCAN HERE</Text>
           </Pressable>
         </View>
       </View>

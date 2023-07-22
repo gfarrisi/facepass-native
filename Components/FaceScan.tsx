@@ -26,21 +26,16 @@ export type Props = {
 };
 
 const FaceScan: React.FC<Props> = (props) => {
+  const { setView } = props;
   const [type, setType] = useState(CameraType.front);
 
   return (
     <>
       <View style={styles.container}>
-        <LinearGradient
-          // Background Linear Gradient
-          colors={['rgba(0,0,0,0.8)', 'transparent']}
-          // style={styles.background}
-        />
+        <LinearGradient colors={['rgba(0,0,0,0.8)', 'transparent']} />
         <Text style={styles.text}>SCANNING TO COMPLETE TRANSACTION</Text>
         <Space h={3} />
-        {/* <iframe  allow="microphone; camera;"> */}
         {/* <Camera style={styles.camera} type={type}></Camera> */}
-        {/* </iframe> */}
         <View style={styles.center}>
           <Image
             source={require('./../assets/facescan-pulse.gif')}
@@ -49,9 +44,14 @@ const FaceScan: React.FC<Props> = (props) => {
         </View>
       </View>
       <View>
-        <View style={styles.center}>{/* <Logo size={160} /> */}</View>
+        <View style={styles.center}>
+          <Logo size={160} />
+        </View>
       </View>
-
+      <Pressable onPress={() => setView('home')}>
+        <QRCode size={50} />
+        <Text style={styles.text}>SCAN HERE</Text>
+      </Pressable>
       {dotsPositions?.map((dots, index) => {
         return (
           <View
@@ -65,7 +65,7 @@ const FaceScan: React.FC<Props> = (props) => {
               opacity: 0.4,
             }}
           >
-            {/* <Dots size={230} /> */}
+            <Dots size={230} />
           </View>
         );
       })}

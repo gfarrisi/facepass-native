@@ -5,6 +5,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
     background: 'linear-gradient(45deg, #4c669f, #3b5998, #192f6a)',
     width: '100%',
+    height: '100%',
     color: 'white',
     position: 'relative',
     zIndex: 1,
