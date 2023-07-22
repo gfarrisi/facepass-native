@@ -42,8 +42,6 @@ export const dotsPositions = [
   },
 ];
 
-const isWeb = Platform.OS === 'web';
-
 const Home: React.FC<Props> = (props) => {
   const { view, setView } = props;
   return (

@@ -16,7 +16,7 @@ const App: React.FC = () => {
       {view === 'home' ? (
         <Home view={view} setView={setView} />
       ) : view === 'qrCamera' ? (
-        <QRCamera />
+        <QRCamera setView={setView} />
       ) : view === 'frontCamera' ? (
         <FaceScan setView={setView} />
       ) : (

@@ -21,6 +21,8 @@ import styles from '../styles';
 import { Views } from '../App';
 import { dotsPositions } from './Home';
 
+const isWeb = Platform.OS === 'web';
+
 export type Props = {
   setView: (view: Views) => void;
 };
@@ -35,7 +37,12 @@ const FaceScan: React.FC<Props> = (props) => {
         <LinearGradient colors={['rgba(0,0,0,0.8)', 'transparent']} />
         <Text style={styles.text}>SCANNING TO COMPLETE TRANSACTION</Text>
         <Space h={3} />
-        {/* <Camera style={styles.camera} type={type}></Camera> */}
+
+        {!isWeb && (
+          <Camera style={styles.camera} type={type}>
+            <View style={{ height: 100, width: 100 }}></View>
+          </Camera>
+        )}
         <View style={styles.center}>
           <Image
             source={require('./../assets/facescan-pulse.gif')}
@@ -45,13 +52,13 @@ const FaceScan: React.FC<Props> = (props) => {
       </View>
       <View>
         <View style={styles.center}>
+          <Pressable onPress={() => setView('home')}>
+            <Text style={styles.text}>Back</Text>
+          </Pressable>
           <Logo size={160} />
         </View>
       </View>
-      <Pressable onPress={() => setView('home')}>
-        <QRCode size={50} />
-        <Text style={styles.text}>SCAN HERE</Text>
-      </Pressable>
+
       {dotsPositions?.map((dots, index) => {
         return (
           <View
