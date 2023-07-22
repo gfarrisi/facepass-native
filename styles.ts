@@ -23,7 +23,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    padding: 100,
+    paddingTop: 100,
+    paddingBottom: 100,
     color: 'white',
     zIndex: 100,
   },
@@ -46,7 +47,14 @@ const styles = StyleSheet.create({
     zIndex: 0,
     opacity: 0.9,
   },
-  camera: {},
+  camera: {
+    height: 100,
+    width: 100,
+    borderRadius: 3,
+    borderColor: '#079697',
+    borderStyle: 'solid',
+    borderWidth: 5,
+  },
   buttonContainer: {},
   button: {},
 });

@@ -38,25 +38,21 @@ const FaceScan: React.FC<Props> = (props) => {
         <Text style={styles.text}>SCANNING TO COMPLETE TRANSACTION</Text>
         <Space h={3} />
 
-        {!isWeb && (
-          <Camera style={styles.camera} type={type}>
-            <View style={{ height: 100, width: 100 }}></View>
-          </Camera>
-        )}
+        {!isWeb && <Camera style={styles.camera} type={type}></Camera>}
+        <Space h={25} />
         <View style={styles.center}>
           <Image
             source={require('./../assets/facescan-pulse.gif')}
-            style={{ width: 250, height: 250 }}
+            style={{ width: 200, height: 200 }}
           />
         </View>
       </View>
-      <View>
-        <View style={styles.center}>
-          <Pressable onPress={() => setView('home')}>
-            <Text style={styles.text}>Back</Text>
-          </Pressable>
-          <Logo size={160} />
-        </View>
+      <Space h={25} />
+      <View style={styles.center}>
+        <Logo size={160} />
+        <Pressable onPress={() => setView('home')}>
+          <Text style={styles.text}>Back</Text>
+        </Pressable>
       </View>
 
       {dotsPositions?.map((dots, index) => {

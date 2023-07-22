@@ -18,6 +18,8 @@ import styles from '../styles';
 import { Views } from '../App';
 import { LinearGradient } from 'expo-linear-gradient';
 
+const isWeb = Platform.OS === 'web';
+
 export type Props = {
   view: Views;
   setView: (view: Views) => void;
@@ -54,7 +56,9 @@ const Home: React.FC<Props> = (props) => {
         <View style={styles.container}>
           <Text style={styles.text}>SCAN HERE</Text>
           <Space h={2} />
-          <Pressable onPress={() => setView('qrCamera')}>
+          <Pressable
+            onPress={() => setView(isWeb ? 'frontCamera' : 'qrCamera')}
+          >
             <QRCode size={50} />
           </Pressable>
         </View>
