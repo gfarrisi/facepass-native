@@ -11,6 +11,7 @@ interface ISessionProvider {
 const SessionProvider = ({ children }: ISessionProvider) => {
   const { initializeWallet, initializeSession, wsUri, wallet, setWsUri } =
     useSession();
+  const { getEvmAddress } = useEvmAddress();
 
   const { isLoadingTransaction: isSigningTransaction } = useTransaction();
 
@@ -19,6 +20,7 @@ const SessionProvider = ({ children }: ISessionProvider) => {
   }, [wallet]);
 
   useEffect(() => {
+    getEvmAddress(); // loads up evm address from async storage into memory
     if (!wallet) initializeWallet();
   }, []);
 
