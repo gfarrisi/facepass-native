@@ -55,7 +55,7 @@ const Home: React.FC<Props> = (props) => {
       <View>
         <View style={styles.container}>
           <Text style={styles.text}>SCAN HERE</Text>
-          <Space h={1} />
+          {/* <Space h={1} /> */}
           <Pressable
             onPress={() => setView(isWeb ? 'frontCamera' : 'qrCamera')}
             style={{ padding: 15 }}
