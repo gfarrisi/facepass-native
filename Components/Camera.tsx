@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, Button } from "react-native";
-import { BarCodeScannedCallback, BarCodeScanner } from "expo-barcode-scanner";
+import React, { useState, useEffect } from 'react';
+import { Text, View, StyleSheet, Button } from 'react-native';
+import { BarCodeScannedCallback, BarCodeScanner } from 'expo-barcode-scanner';
 
 export const Camera: React.FC = () => {
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
@@ -9,7 +9,7 @@ export const Camera: React.FC = () => {
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
-      setHasPermission(status === "granted");
+      setHasPermission(status === 'granted');
     };
 
     getBarCodeScannerPermissions();
@@ -17,6 +17,7 @@ export const Camera: React.FC = () => {
 
   const handleBarCodeScanned: BarCodeScannedCallback = ({ type, data }) => {
     setScanned(true);
+    //@ts-ignore
     alert(`Bar code with type ${type} and data ${data} has been scanned!`);
   };
 
@@ -34,7 +35,7 @@ export const Camera: React.FC = () => {
         style={StyleSheet.absoluteFillObject}
       />
       {scanned && (
-        <Button title={"Tap to Scan Again"} onPress={() => setScanned(false)} />
+        <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />
       )}
     </View>
   );
@@ -43,7 +44,7 @@ export const Camera: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column",
-    justifyContent: "center",
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
 });
