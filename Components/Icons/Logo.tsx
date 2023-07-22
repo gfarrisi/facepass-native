@@ -7,11 +7,11 @@ interface LogoProps {
 }
 
 export const Logo: FC<LogoProps> = (props) => {
-  let ratio = 3456 / 6912;
-  let size = props.size || props.width || 6912;
-  let width = size;
-  let height = size * ratio;
-  let color = props.color || '#757575';
+  const ratio = 3456 / 6912;
+  const size = props.size || props.width || 6912;
+  const width = size;
+  const height = size * ratio;
+  const color = props.color || '#757575';
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -28,11 +28,11 @@ export const Logo: FC<LogoProps> = (props) => {
         <clipPath id="67015ef314">
           <path
             d="M 1 675 L 403 675 L 403 1552 L 1 1552 Z M 1 675 "
-            clip-rule="nonzero"
+            clipRule="nonzero"
           />
         </clipPath>
       </defs>
-      <g clip-path="url(#67015ef314)">
+      <g clipPath="url(#67015ef314)">
         <g fill="#ffffff" fillOpacity="1">
           <g transform="translate(-9.006315, 1551.130326)">
             <g>

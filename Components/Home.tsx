@@ -51,9 +51,10 @@ const Home: React.FC<Props> = (props) => {
         </View>
       </View>
       <>
-        {dotsPositions?.map((dots) => {
+        {dotsPositions?.map((dots, index) => {
           return (
             <View
+              key={index}
               style={{
                 ...styles.dots,
                 top: dots.top,
