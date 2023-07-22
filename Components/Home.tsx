@@ -31,16 +31,16 @@ export const dotsPositions = [
     top: 0,
   },
   {
-    right: -150,
+    right: -100,
     top: 250,
   },
   {
     left: -100,
-    bottom: 100,
+    bottom: 130,
   },
   {
     right: -100,
-    bottom: -50,
+    bottom: 0,
   },
 ];
 
@@ -74,9 +74,10 @@ const Home: React.FC<Props> = (props) => {
                 left: dots.left,
                 right: dots.right,
                 bottom: dots.bottom,
+                opacity: 0.6,
               }}
             >
-              <Dots size={230} />
+              <Dots size={210} />
             </View>
           );
         })}
