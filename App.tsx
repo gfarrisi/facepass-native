@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import Home from './Components/Home';
 import AppProvider from './providers/AppProvider';
 import FaceScan from './Components/FaceScan';
+import { QRCamera } from './Components/Camera';
 
 export type Views = 'home' | 'qrCamera' | 'frontCamera' | 'sucesss';
 
@@ -15,7 +16,7 @@ const App: React.FC = () => {
       {view === 'home' ? (
         <Home view={view} setView={setView} />
       ) : view === 'qrCamera' ? (
-        <></>
+        <QRCamera />
       ) : view === 'frontCamera' ? (
         <FaceScan setView={setView} />
       ) : (

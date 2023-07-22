@@ -49,16 +49,15 @@ const Home: React.FC<Props> = (props) => {
   return (
     <>
       <View style={styles.container}>
-        {/* <Icon size={150} />
-        <Logo size={150} /> */}
+        <Icon size={150} />
+        <Logo size={150} />
       </View>
       <View>
         <View style={styles.container}>
           <Text style={styles.text}>SCAN HERE</Text>
           <Space h={2} />
-          <Pressable onPress={() => setView('frontCamera')}>
-            {/* <QRCode size={50} /> */}
-            <Text style={styles.text}>SCAN HERE</Text>
+          <Pressable onPress={() => setView('qrCamera')}>
+            <QRCode size={50} />
           </Pressable>
         </View>
       </View>
