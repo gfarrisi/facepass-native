@@ -77,7 +77,6 @@ const styles = StyleSheet.create({
     width: '100%',
     padding: '50px',
   },
-
   greeting: {
     display: 'flex',
     alignItems: 'center',
