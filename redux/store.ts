@@ -7,6 +7,10 @@ export const store = configureStore({
     session: sessionSlice,
     transaction: transactionSlice,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

@@ -13,10 +13,11 @@ const WalletConnect = () => {
     isInitialized,
     evmAddress,
     wsUri,
+    initSession,
     reset,
   } = useSession();
-  const address = '';
-  const wsUriFinal = ``;
+  const address = '0x9A9A200C587f49f9783B041225269Ea2a307495B';
+  const wsUriFinal = `wc:06d31af21f3c6db76bca1166d27fd4ba52d7c0e622c0d754be63812a6c56ff48@2?relay-protocol=irn&symKey=3445c9538ab78ffce4634db10b3535b56c3673bc35515a624bfca7f8868f38f1`;
   console.log(`
   evmAddress: ${evmAddress}
   isInitialized: ${isInitialized}
@@ -25,10 +26,16 @@ const WalletConnect = () => {
   wsUri: ${wsUri}
   `);
   const dispatch = useDispatch();
+
   useEffect(() => {
-    if (!wsUri || !evmAddress) return;
-    onInitialize();
-  }, [evmAddress, wsUri]);
+    if (wallet && wsUri && evmAddress) initSession();
+  }, [wallet, wsUri, evmAddress]);
+
+  useEffect(() => {
+    if (!wallet) {
+      onInitialize();
+    }
+  }, [wallet]);
 
   useEffect(() => {
     setTimeout(() => {

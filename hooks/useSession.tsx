@@ -58,14 +58,13 @@ const useSession = () => {
     dispatch(setEvmAddress(null));
     dispatch(setWsUri(''));
     dispatch(setSession(null));
-    dispatch(setWallet(null));
   };
 
-  const onInitialize = async () => {
-    const wallet = await Web3Wallet.init({
-      core,
-      metadata: WCMetadata,
-    });
+  const initSession = () => {
+    if (!wallet) {
+      console.log(`❌ Cannot initialize session without being connected`);
+      return;
+    }
 
     wallet.on('session_proposal', async (proposal) => {
       const { requiredNamespaces } = proposal.params;
@@ -144,22 +143,29 @@ const useSession = () => {
       }
     });
 
-    const pairing = await wallet.core.pairing
-      .pair({ uri: wsUri })
-      .catch((err) => {
-        console.log(
-          `❌ Failed to initialize wallet connect session. Uri: ${wsUri}. Address: ${evmAddress}. Error: ${err.message}`,
-        );
-        reset();
-        return null;
-      });
+    wallet.on('session_delete', () => {
+      reset();
+    });
 
-    if (!pairing) return;
+    wallet.core.pairing.pair({ uri: wsUri }).catch((err) => {
+      console.log(
+        `❌ Failed to initialize wallet connect session. Uri: ${wsUri}. Address: ${evmAddress}. Error: ${err.message}`,
+      );
+      reset();
+    });
+  };
 
-    dispatch(setWallet(wallet));
+  const onInitialize = async () => {
+    const _wallet = await Web3Wallet.init({
+      core,
+      metadata: WCMetadata,
+    });
+
+    dispatch(setWallet(_wallet));
   };
 
   return {
+    initSession,
     reset,
     wsUri,
     onInitialize,
