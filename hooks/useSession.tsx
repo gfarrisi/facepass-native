@@ -7,12 +7,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import useTransaction from './useTransaction';
 import {
-  setEvmAddress,
   setIsInitialized,
   setSession,
   setWallet,
   setWsUri,
 } from '../redux/slices/session';
+import { useEvmAddress } from './useEvmAddress';
 
 const WCMetadata = {
   name: 'FACE PASS',
@@ -37,14 +37,14 @@ const useSession = () => {
     setIsLoading: setIsLoadingTransaction,
   } = useTransaction();
 
+  const { getEvmAddress } = useEvmAddress();
+
+  const { deleteEvmAddress } = useEvmAddress();
+
   const dispatch = useDispatch();
 
   const isInitialized = useSelector(
     (state: RootState) => state.session.isInitialized,
-  );
-
-  const evmAddress = useSelector(
-    (state: RootState) => state.session.evmAddress,
   );
 
   const session = useSelector((state: RootState) => state.session.session);
@@ -54,9 +54,8 @@ const useSession = () => {
   const wsUri = useSelector((state: RootState) => state.session.wsUri);
 
   const reset = () => {
-    console.log('dispatch()!');
+    deleteEvmAddress();
     dispatch(setIsInitialized(false));
-    dispatch(setEvmAddress(null));
     dispatch(setWsUri(''));
     dispatch(setSession(null));
   };
@@ -68,6 +67,7 @@ const useSession = () => {
     }
 
     wallet.on('session_proposal', async (proposal) => {
+      const evmAddress = await getEvmAddress();
       const { requiredNamespaces } = proposal.params;
       const namespaceKey = 'eip155';
       const requiredNamespace = requiredNamespaces[namespaceKey];
@@ -100,6 +100,7 @@ const useSession = () => {
       const { request } = params;
       const { method } = request;
 
+      params.request.params;
       if (method === 'eth_sendTransaction') {
         try {
           dispatch(setIsLoadingTransaction(true));
@@ -112,7 +113,7 @@ const useSession = () => {
             to: '0x',
             data: '0x',
           });
-          console.log('✨ txSignature', txSignature);
+
           await wallet.respondSessionRequest({
             topic,
             response: txSignature,
@@ -158,22 +159,13 @@ const useSession = () => {
 
   return {
     wsUri,
-    evmAddress,
     initializeSession,
     reset,
     initializeWallet,
     wallet,
     session,
     isInitialized,
-    setEvmAddress: (evmAddress: string) => dispatch(setEvmAddress(evmAddress)),
-    getEvmAddress: async () => {
-      const asyncStorageEvmAddress = await AsyncStorage.getItem('@evm_address');
-      return asyncStorageEvmAddress;
-    },
-    deleteEvmAddress: async () => {
-      await AsyncStorage.removeItem('@evm_address');
-      dispatch(setEvmAddress(null));
-    },
+
     setWsUri: (wsUri: string) => dispatch(setWsUri(wsUri)),
   };
 };
