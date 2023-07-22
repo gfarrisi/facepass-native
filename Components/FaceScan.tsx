@@ -20,7 +20,7 @@ import Space from './Space';
 import styles from '../styles';
 import { Views } from '../App';
 import { dotsPositions } from './Home';
-import { signMessage } from '../utils/convertFaceDataToWallet';
+import { connectToWallet, signMessage } from '../utils/convertFaceDataToWallet';
 import { getPublicKey } from '../utils/publicKeyStorage';
 import { useEvmAddress } from '../hooks/useEvmAddress';
 
@@ -33,17 +33,8 @@ export type Props = {
 const FaceScan: React.FC<Props> = (props) => {
   const { setView } = props;
   const [type, setType] = useState(CameraType.front);
-  const [address, setAddress] = useState<string>();
-
-  useEffect(() => {
-    const getPublicKeyFromStorage = async () => {
-      const { getEvmAddress, setEvmAddress } = await useEvmAddress();
-      const address = await getEvmAddress();
-      if (!address) return;
-      setAddress(address);
-    };
-    getPublicKeyFromStorage();
-  }, []);
+  //   const [address, setAddress] = useState<string>();
+  const { address, setEvmAddress } = useEvmAddress();
 
   //   const evmAddress = await getEvmAddress()
 
@@ -51,14 +42,16 @@ const FaceScan: React.FC<Props> = (props) => {
     ? `SCANNING TO COMPLETE TRANSACTION`
     : `SCAN TO CREATE WALLET`;
 
-  const resolveFaceData = () => {
+  const resolveFaceData = (faceData?: string) => {
     if (!address) {
       //create wallet
-      // const account = connectToWallet('', '');
+      const account = connectToWallet('');
+      setEvmAddress(address);
       // setPublicKey(account.address);
       setView('qrCamera');
     } else {
       //call send transaction
+      faceData && signMessage(faceData);
     }
   };
 
