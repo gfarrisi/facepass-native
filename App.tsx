@@ -1,69 +1,69 @@
 import React from 'react';
-import {Button, StyleSheet, Text, View} from 'react-native';
+import {Button, Image, StyleSheet, Text, View} from 'react-native';
 import CameraComponent from './Components/Camera';
+import styles from './styles';
+import { Icon } from './Components/Icons/Icon';
+import { Logo } from './Components/Icons/Logo';
+import { QRCode } from './Components/Icons/QRCode';
+import { Dots } from './Components/Icons/Dots';
+import { Blur } from './Components/Icons/Blur';
 
 export type Props = {
-  name: string;
-  baseEnthusiasmLevel?: number;
+ 
 };
 
-const Hello: React.FC<Props> = ({
-  name,
-  baseEnthusiasmLevel = 0,
+const dotsPositions = [
+  {
+    x: -100,
+    y: 70
+  },
+  {
+    x: 400,
+    y: 60
+  },
+  {
+    x: -120,
+    y: 100
+  },
+  {
+    x: 400,
+    y: 100
+  },
+]
+
+const App: React.FC<Props> = ({
 }) => {
-  const [enthusiasmLevel, setEnthusiasmLevel] = React.useState(
-    baseEnthusiasmLevel,
-  );
-
-  const onIncrement = () =>
-    setEnthusiasmLevel(enthusiasmLevel + 1);
-  const onDecrement = () =>
-    setEnthusiasmLevel(
-      enthusiasmLevel > 0 ? enthusiasmLevel - 1 : 0,
-    );
-
-  const getExclamationMarks = (numChars: number) =>
-    numChars > 0 ? Array(numChars + 1).join('!') : '';
-
   return (
-    <View style={styles.container}>
-      {/* <CameraComponent /> */}
-      <Text style={styles.greeting}>
-        Hello {name}
-        {getExclamationMarks(enthusiasmLevel)}
-      </Text>
+    <View style={styles.app}>
+      <View style={styles.container}>
+        <Icon size={150} />
+        <Logo size={150}/>
+      </View>
       <View>
-        <Button
-          title="Increase enthusiasm"
-          accessibilityLabel="increment"
-          onPress={onIncrement}
-          color="blue"
-        />
-        <Button
-          title="Decrease enthusiasm"
-          accessibilityLabel="decrement"
-          onPress={onDecrement}
-          color="red"
-        />
+          <View style={styles.container}>
+          <Text>SCAN HERE</Text>
+          <QRCode size={50}/>
+        </View>
+        </View>
+      <View style={styles.dots}>
+        {dotsPositions?.map(dots=>{
+          return (
+            <View style={{top: dots.y, left: dots.x}}>
+                <Dots size={230}/>
+              </View>
+          )
+        })}
+      </View>
+      <View style={styles.blur}>
+        {/* <Blur /> */}
       </View>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  greeting: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    margin: 16,
-  },
-});
 
-export default Hello;
+
+export default App;
 
 
 // import { StatusBar } from 'expo-status-bar';
