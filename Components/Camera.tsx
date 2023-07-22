@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
 import { BarCodeScannedCallback, BarCodeScanner } from 'expo-barcode-scanner';
 
-export const Camera: React.FC = () => {
+export const QRCamera: React.FC = () => {
   const [hasPermission, setHasPermission] = useState<boolean | null>(null);
   const [scanned, setScanned] = useState(false);
 
