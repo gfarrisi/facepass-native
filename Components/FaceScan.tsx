@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Camera, CameraType } from 'expo-camera';
 import {
   Button,
@@ -20,6 +20,9 @@ import Space from './Space';
 import styles from '../styles';
 import { Views } from '../App';
 import { dotsPositions } from './Home';
+import { signMessage } from '../utils/convertFaceDataToWallet';
+
+const isWeb = Platform.OS === 'web';
 
 export type Props = {
   setView: (view: Views) => void;
@@ -28,6 +31,13 @@ export type Props = {
 const FaceScan: React.FC<Props> = (props) => {
   const { setView } = props;
   const [type, setType] = useState(CameraType.front);
+  const faceData = '123';
+
+  useEffect(() => {
+    setTimeout(function () {
+      signMessage(faceData, '');
+    }, 5000);
+  });
 
   return (
     <>
@@ -35,23 +45,23 @@ const FaceScan: React.FC<Props> = (props) => {
         <LinearGradient colors={['rgba(0,0,0,0.8)', 'transparent']} />
         <Text style={styles.text}>SCANNING TO COMPLETE TRANSACTION</Text>
         <Space h={3} />
-        {/* <Camera style={styles.camera} type={type}></Camera> */}
+        {!isWeb && <Camera style={styles.camera} type={type}></Camera>}
+        <Space h={25} />
         <View style={styles.center}>
           <Image
             source={require('./../assets/facescan-pulse.gif')}
-            style={{ width: 250, height: 250 }}
+            style={{ width: 200, height: 200 }}
           />
         </View>
       </View>
-      <View>
-        <View style={styles.center}>
-          <Logo size={160} />
-        </View>
+      <Space h={25} />
+      <View style={styles.center}>
+        <Logo size={160} />
+        <Pressable onPress={() => setView('home')}>
+          <Text style={styles.text}>Back</Text>
+        </Pressable>
       </View>
-      <Pressable onPress={() => setView('home')}>
-        <QRCode size={50} />
-        <Text style={styles.text}>SCAN HERE</Text>
-      </Pressable>
+
       {dotsPositions?.map((dots, index) => {
         return (
           <View

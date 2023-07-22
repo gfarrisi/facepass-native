@@ -18,6 +18,8 @@ import styles from '../styles';
 import { Views } from '../App';
 import { LinearGradient } from 'expo-linear-gradient';
 
+const isWeb = Platform.OS === 'web';
+
 export type Props = {
   view: Views;
   setView: (view: Views) => void;
@@ -29,20 +31,18 @@ export const dotsPositions = [
     top: 0,
   },
   {
-    right: -150,
+    right: -100,
     top: 250,
   },
   {
     left: -100,
-    bottom: 100,
+    bottom: 130,
   },
   {
     right: -100,
-    bottom: -50,
+    bottom: 0,
   },
 ];
-
-const isWeb = Platform.OS === 'web';
 
 const Home: React.FC<Props> = (props) => {
   const { view, setView } = props;
@@ -55,8 +55,11 @@ const Home: React.FC<Props> = (props) => {
       <View>
         <View style={styles.container}>
           <Text style={styles.text}>SCAN HERE</Text>
-          <Space h={2} />
-          <Pressable onPress={() => setView('qrCamera')}>
+          {/* <Space h={1} /> */}
+          <Pressable
+            onPress={() => setView(isWeb ? 'frontCamera' : 'qrCamera')}
+            style={{ padding: 15 }}
+          >
             <QRCode size={50} />
           </Pressable>
         </View>
@@ -72,9 +75,10 @@ const Home: React.FC<Props> = (props) => {
                 left: dots.left,
                 right: dots.right,
                 bottom: dots.bottom,
+                opacity: 0.6,
               }}
             >
-              <Dots size={230} />
+              <Dots size={210} />
             </View>
           );
         })}
