@@ -1,13 +1,21 @@
 import React from 'react';
-import { Button, Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import {
+  Button,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  Platform,
+} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import { Icon } from './Icons/Icon';
 import { Logo } from './Icons/Logo';
 import { QRCode } from './Icons/QRCode';
 import { Dots } from './Icons/Dots';
 import Space from './Space';
 import styles from '../styles';
-
-type Views = 'home' | 'qrCamera' | 'frontCamera' | 'sucesss';
+import { Views } from '../App';
 
 export type Props = {
   view: Views;
@@ -16,22 +24,24 @@ export type Props = {
 
 const dotsPositions = [
   {
-    x: -100,
-    y: 70,
+    left: -100,
+    top: 0,
   },
   {
-    x: 400,
-    y: 60,
+    right: -150,
+    top: 250,
   },
   {
-    x: '-10%',
-    y: 100,
+    left: -100,
+    bottom: 100,
   },
   {
-    x: '150%',
-    y: 100,
+    right: -100,
+    bottom: -50,
   },
 ];
+
+const isWeb = Platform.OS === 'web';
 
 const Home: React.FC<Props> = (props) => {
   const { view, setView } = props;
@@ -50,15 +60,24 @@ const Home: React.FC<Props> = (props) => {
           </Pressable>
         </View>
       </View>
-      <View style={styles.dots}>
-        {dotsPositions?.map((dots) => {
+      <>
+        {dotsPositions?.map((dots, index) => {
           return (
-            <View style={{ top: dots.y, left: dots.x }}>
+            <View
+              key={index}
+              style={{
+                ...styles.dots,
+                top: dots.top,
+                left: dots.left,
+                right: dots.right,
+                bottom: dots.bottom,
+              }}
+            >
               <Dots size={230} />
             </View>
           );
         })}
-      </View>
+      </>
     </>
   );
 };
