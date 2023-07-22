@@ -7,11 +7,11 @@ interface DotsProps {
 }
 
 export const Dots: FC<DotsProps> = (props) => {
-  let ratio = 500 / 500;
-  let size = props.size || props.width || 500;
-  let width = size;
-  let height = size * ratio;
-  let color = props.color || '#757575';
+  const ratio = 500 / 500;
+  const size = props.size || props.width || 500;
+  const width = size;
+  const height = size * ratio;
+  const color = props.color || '#757575';
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
