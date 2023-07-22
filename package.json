@@ -10,13 +10,17 @@
   },
   "dependencies": {
     "@expo/webpack-config": "^18.0.1",
+    "@reduxjs/toolkit": "^1.9.5",
+    "@walletconnect/core": "^2.9.1",
+    "@walletconnect/web3wallet": "^1.8.7",
     "expo": "~48.0.18",
     "expo-status-bar": "~1.4.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-native": "0.71.8",
     "react-native-camera": "^4.2.1",
-    "react-native-web": "~0.18.10"
+    "react-native-web": "~0.18.10",
+    "react-redux": "^8.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
