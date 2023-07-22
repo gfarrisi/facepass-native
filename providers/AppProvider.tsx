@@ -11,7 +11,7 @@ interface IAppProvider {
 const AppProvider = ({ children }: IAppProvider) => {
   return (
     <Provider store={store}>
-      <WalletConnect />
+     {children}
     </Provider>
   );
 };

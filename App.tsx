@@ -1,4 +1,3 @@
-import 'react-native-polyfill';
 import '@walletconnect/react-native-compat';
 import '@ethersproject/shims';
 import 'fast-text-encoding';
