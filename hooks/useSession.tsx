@@ -100,7 +100,6 @@ const useSession = () => {
       const { request } = params;
       const { method } = request;
 
-      params.request.params;
       if (method === 'eth_sendTransaction') {
         try {
           dispatch(setIsLoadingTransaction(true));
