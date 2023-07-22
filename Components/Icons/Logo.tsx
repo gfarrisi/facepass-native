@@ -28,7 +28,7 @@ export const Logo: FC<LogoProps> = (props) => {
         <clipPath id="67015ef314">
           <path
             d="M 1 675 L 403 675 L 403 1552 L 1 1552 Z M 1 675 "
-            clip-rule="nonzero"
+            clipRule="nonzero"
           />
         </clipPath>
       </defs>

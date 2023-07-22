@@ -1,5 +1,14 @@
 import React from 'react';
-import { Button, Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import {
+  Button,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+  Platform,
+} from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import { Icon } from './Icons/Icon';
 import { Logo } from './Icons/Logo';
 import { QRCode } from './Icons/QRCode';
@@ -20,8 +29,8 @@ const dotsPositions = [
     top: 0,
   },
   {
-    right: -100,
-    top: 150,
+    right: -150,
+    top: 250,
   },
   {
     left: -100,
@@ -33,10 +42,14 @@ const dotsPositions = [
   },
 ];
 
+const isWeb = Platform.OS === 'web';
+
 const Home: React.FC<Props> = (props) => {
   const { view, setView } = props;
   return (
     <>
+      {/* <LinearGradient colors={['#4c669f', '#3b5998', '#192f6a']} style={styles.linearGradient} start={{x: 0, y:0}} end={{x: 100, y:100}}> */}
+
       <View style={styles.container}>
         <Icon size={150} />
         <Logo size={150} />
@@ -67,6 +80,7 @@ const Home: React.FC<Props> = (props) => {
           );
         })}
       </>
+      {/* </LinearGradient> */}
     </>
   );
 };
