@@ -1,11 +1,11 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 import {
   setError,
   setIsLoading,
   setTransactionHash,
   setTransactionSignature,
-} from "../redux/slices/transaction";
-import { RootState } from "../redux/store";
+} from '../redux/slices/transaction';
+import { RootState } from '../redux/store';
 
 interface ISendTransactionParams {
   from: string;
@@ -24,9 +24,11 @@ const useSendTransaction = () => {
 
   const error = useSelector((state: RootState) => state.transaction.error);
   const isLoadingTransaction = useSelector(
-    (state: RootState) => state.transaction.isLoading
+    (state: RootState) => state.transaction,
   );
-  const transactionSignature = useSelector((state:RootState)=>state.transaction.transactionSignature)
+  const transactionSignature = useSelector(
+    (state: RootState) => state.transaction.transactionSignature,
+  );
 
   const sendTransaction = ({
     from,
@@ -38,7 +40,7 @@ const useSendTransaction = () => {
     return Promise.resolve({
       id: 1,
       result,
-      jsonrpc: "2.0",
+      jsonrpc: '2.0',
     });
   };
 

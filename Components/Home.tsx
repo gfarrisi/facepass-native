@@ -8,7 +8,7 @@ import {
   View,
   Platform,
 } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
+// import LinearGradient from 'react-native-linear-gradient';
 import { Icon } from './Icons/Icon';
 import { Logo } from './Icons/Logo';
 import { QRCode } from './Icons/QRCode';
@@ -16,13 +16,14 @@ import { Dots } from './Icons/Dots';
 import Space from './Space';
 import styles from '../styles';
 import { Views } from '../App';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export type Props = {
   view: Views;
   setView: (view: Views) => void;
 };
 
-const dotsPositions = [
+export const dotsPositions = [
   {
     left: -100,
     top: 0,
@@ -41,8 +42,6 @@ const dotsPositions = [
   },
 ];
 
-const isWeb = Platform.OS === 'web';
-
 const Home: React.FC<Props> = (props) => {
   const { view, setView } = props;
   return (
@@ -53,7 +52,7 @@ const Home: React.FC<Props> = (props) => {
       </View>
       <View>
         <View style={styles.container}>
-          <Text style={{ color: 'white' }}>SCAN HERE</Text>
+          <Text style={styles.text}>SCAN HERE</Text>
           <Space h={2} />
           <Pressable onPress={() => setView('qrCamera')}>
             <QRCode size={50} />
@@ -61,9 +60,10 @@ const Home: React.FC<Props> = (props) => {
         </View>
       </View>
       <>
-        {dotsPositions?.map((dots) => {
+        {dotsPositions?.map((dots, index) => {
           return (
             <View
+              key={index}
               style={{
                 ...styles.dots,
                 top: dots.top,
@@ -77,6 +77,14 @@ const Home: React.FC<Props> = (props) => {
           );
         })}
       </>
+      {/* <View style={{...styles.linearGradient, }}>
+        <LinearGradient
+        // Button Linear Gradient
+        colors={['#079697','transparent' ,'transparent' ,'transparent', 'transparent']}
+        start={{x:0, y:600}}
+        style={{...styles.button, height: '100vh'}}>
+        </LinearGradient>
+      </View> */}
     </>
   );
 };

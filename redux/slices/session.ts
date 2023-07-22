@@ -1,9 +1,10 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { IWeb3Wallet } from "@walletconnect/web3wallet";
-import { createAction } from "@reduxjs/toolkit";
-import { SessionTypes } from "@walletconnect/types";
+import { PayloadAction, createReducer, createSlice } from '@reduxjs/toolkit';
+import { IWeb3Wallet } from '@walletconnect/web3wallet';
+import { createAction } from '@reduxjs/toolkit';
+import { SessionTypes } from '@walletconnect/types';
 
 interface InitialState {
+  wsUri: string;
   wallet: IWeb3Wallet | null;
   session: SessionTypes.Struct | null;
   evmAddress: string | null;
@@ -11,25 +12,31 @@ interface InitialState {
   isLoading: boolean;
 }
 
-export const setIsLoading = createAction<boolean, "setIsLoading">(
-  "setIsLoading"
+export const setIsLoading = createAction<boolean, 'setIsLoading'>(
+  'setIsLoading',
 );
 
-export const setWallet = createAction<IWeb3Wallet, "setWallet">("setWallet");
-
-export const setSession = createAction<SessionTypes.Struct, "setSession">(
-  "setSession"
+export const setWallet = createAction<IWeb3Wallet | null, 'setWallet'>(
+  'setWallet',
 );
 
-export const setEvmAddress = createAction<string, "setEvmAddress">(
-  "setEvmAddress"
+export const setSession = createAction<
+  SessionTypes.Struct | null,
+  'setSession'
+>('setSession');
+
+export const setWsUri = createAction<string, 'setWsUri'>('setWsUri');
+
+export const setEvmAddress = createAction<string | null, 'setEvmAddress'>(
+  'setEvmAddress',
 );
 
-export const setIsInitialized = createAction<boolean, "setIsInitialized">(
-  "setIsInitialized"
+export const setIsInitialized = createAction<boolean, 'setIsInitialized'>(
+  'setIsInitialized',
 );
 
 const initialState: InitialState = {
+  wsUri: '',
   isLoading: false,
   wallet: null,
   session: null,
@@ -37,26 +44,24 @@ const initialState: InitialState = {
   isInitialized: false,
 };
 
-export const sessionSlice = createSlice({
-  name: "session",
-  initialState,
-  reducers: {
-    [setWallet.type]: (state, action: PayloadAction<IWeb3Wallet>) => {
-      state.wallet = action.payload;
-    },
-    [setSession.type]: (state, action: PayloadAction<SessionTypes.Struct>) => {
+export const sessionSlice = createReducer(initialState, (builder) => {
+  builder
+    .addCase(setWsUri, (state, action) => {
+      state.wsUri = action.payload;
+    })
+    .addCase(setSession, (state, action) => {
       state.session = action.payload;
-    },
-    [setIsInitialized.type]: (state, action: PayloadAction<boolean>) => {
-      state.isInitialized = action.payload;
-    },
-    [setEvmAddress.type]: (state, action: PayloadAction<string>) => {
+    })
+    .addCase(setWallet, (state, action) => {
+      state.wallet = action.payload;
+    })
+    .addCase(setEvmAddress, (state, action) => {
       state.evmAddress = action.payload;
-    },
-    [setIsLoading.type]: (state, action: PayloadAction<boolean>) => {
+    })
+    .addCase(setIsLoading, (state, action) => {
       state.isLoading = action.payload;
-    },
-  },
+    })
+    .addCase(setIsInitialized, (state, action) => {
+      state.isInitialized = action.payload;
+    });
 });
-
-export default sessionSlice.reducer;
