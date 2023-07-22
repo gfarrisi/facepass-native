@@ -43,7 +43,8 @@ const FaceScan: React.FC<Props> = (props) => {
     if (!address) {
       //create wallet
       const account = connectToWallet(faceData);
-      setEvmAddress(address);
+      console.log('account___', { account });
+      setEvmAddress(account?.address);
       // setPublicKey(account.address);
       setView('waiting');
     } else {

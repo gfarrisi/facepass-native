@@ -30,3 +30,5 @@ const App: React.FC = () => {
 };
 
 export default App;
+
+//waiting > front camera > sucess > waiting
