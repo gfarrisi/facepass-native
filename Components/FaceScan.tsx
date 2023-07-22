@@ -20,7 +20,9 @@ import Space from './Space';
 import styles from '../styles';
 import { Views } from '../App';
 import { dotsPositions } from './Home';
-import { signMessage } from '../utils/convertFaceDataToWallet';
+import { connectToWallet, signMessage } from '../utils/convertFaceDataToWallet';
+import { getPublicKey } from '../utils/publicKeyStorage';
+import { useEvmAddress } from '../hooks/useEvmAddress';
 
 const isWeb = Platform.OS === 'web';
 
@@ -31,19 +33,32 @@ export type Props = {
 const FaceScan: React.FC<Props> = (props) => {
   const { setView } = props;
   const [type, setType] = useState(CameraType.front);
-  const faceData = '123';
+  const { address, setEvmAddress } = useEvmAddress();
 
-  useEffect(() => {
-    setTimeout(function () {
-      signMessage(faceData, '');
-    }, 5000);
-  });
+  const message = address
+    ? `SCANNING TO COMPLETE TRANSACTION`
+    : `SCAN TO CREATE WALLET`;
+
+  const resolveFaceData = (faceData: string) => {
+    if (!address) {
+      //create wallet
+      const account = connectToWallet(faceData);
+      console.log('account___', { account });
+      setEvmAddress(account.address);
+      // setPublicKey(account.address);
+      setView('waiting');
+    } else {
+      //call send transaction
+      faceData && signMessage(faceData);
+      setView('waiting');
+    }
+  };
 
   return (
     <>
       <View style={styles.container}>
         <LinearGradient colors={['rgba(0,0,0,0.8)', 'transparent']} />
-        <Text style={styles.text}>SCANNING TO COMPLETE TRANSACTION</Text>
+        <Text style={styles.text}>{message}</Text>
         <Space h={3} />
         {!isWeb && <Camera style={styles.camera} type={type}></Camera>}
         <Space h={25} />
@@ -57,9 +72,14 @@ const FaceScan: React.FC<Props> = (props) => {
       <Space h={25} />
       <View style={styles.center}>
         <Logo size={160} />
-        <Pressable onPress={() => setView('home')}>
-          <Text style={styles.text}>Back</Text>
-        </Pressable>
+        <View style={styles.flex}>
+          <Pressable onPress={() => setView('home')}>
+            <Text style={styles.text}>Back</Text>
+          </Pressable>
+          <Pressable onPress={() => resolveFaceData('123')}>
+            <Text style={styles.text}>Complete</Text>
+          </Pressable>
+        </View>
       </View>
 
       {dotsPositions?.map((dots, index) => {

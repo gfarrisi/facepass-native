@@ -17,13 +17,17 @@ const getWalletFromFaceData = (hexString: HexString): HDAccount => {
   return account;
 };
 
-export const signMessage = async (
-  faceData: string,
-  message: string,
-): Promise<HexString> => {
+export const connectToWallet = (faceData: string): HDAccount => {
   const hex = computeHexString(faceData);
   const acccount = getWalletFromFaceData(hex);
+  return acccount;
+};
 
-  const signedMessage = await acccount.signMessage({ message: message });
+export const signMessage = async (
+  faceData: string,
+  message?: string,
+): Promise<HexString> => {
+  const acccount = connectToWallet(faceData);
+  const signedMessage = await acccount.signMessage({ message: message ?? '' });
   return signedMessage;
 };
