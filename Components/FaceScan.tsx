@@ -49,9 +49,7 @@ const FaceScan: React.FC<Props> = (props) => {
         </View>
       </View>
       <View>
-        <View style={styles.center}>
-          <Logo size={160} />
-        </View>
+        <View style={styles.center}>{/* <Logo size={160} /> */}</View>
       </View>
 
       {dotsPositions?.map((dots, index) => {
@@ -67,7 +65,7 @@ const FaceScan: React.FC<Props> = (props) => {
               opacity: 0.4,
             }}
           >
-            <Dots size={230} />
+            {/* <Dots size={230} /> */}
           </View>
         );
       })}
