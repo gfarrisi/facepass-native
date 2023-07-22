@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { Web3Wallet } from '@walletconnect/web3wallet';
 import { Core } from '@walletconnect/core';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getSdkError, parseUri } from '@walletconnect/utils';
 
 import useTransaction from './useTransaction';
 import {
@@ -60,14 +60,15 @@ const useSession = () => {
     dispatch(setSession(null));
   };
 
-  const initializeSession = () => {
+  const initializeSession = async () => {
     if (!wallet) {
       console.log(`❌ Cannot initialize session without being connected`);
       return;
     }
 
     wallet.on('session_proposal', async (proposal) => {
-      const evmAddress = await getEvmAddress();
+      const evmAddress =
+        '0x9A9A200C587f49f9783B041225269Ea2a307495B'; /* await getEvmAddress(); */
       const { requiredNamespaces } = proposal.params;
       const namespaceKey = 'eip155';
       const requiredNamespace = requiredNamespaces[namespaceKey];
@@ -145,18 +146,63 @@ const useSession = () => {
     wallet.on('session_delete', () => {
       reset();
     });
+
+    wallet.core.pairing
+      .pair({ uri: wsUri })
+      .catch((err) =>
+        console.log(`❌ Failed to pair wallet connect. Error: ${err.message}`),
+      );
   };
 
-  const initializeWallet = async () => {
+  const initializeWallet = async (setIfSessionActive?: boolean) => {
     const _wallet = await Web3Wallet.init({
       core,
       metadata: WCMetadata,
     });
 
+    const activeSessions = await _wallet.getActiveSessions();
+
+    const sessionValues = Object.values(activeSessions ?? {});
+
+    if (setIfSessionActive) {
+      const sessionPairingTopic = sessionValues?.[0]?.pairingTopic;
+
+      const wsSocketUri = sessionPairingTopic
+        ? `wc:${sessionPairingTopic}@2?relay-protocol=irn&symKey=xxxxxx`
+        : '';
+
+      if (wsSocketUri && sessionPairingTopic) {
+        dispatch(setWsUri(wsSocketUri));
+        dispatch(setSession(sessionPairingTopic ? sessionValues[0] : null));
+      }
+    }
+
     dispatch(setWallet(_wallet));
   };
 
+  const onDisconnect = async () => {
+    if (!session) {
+      console.log(`❌ No session found for the wallet. Disconnect is allowed`);
+      return;
+    }
+
+    if (!wallet) {
+      console.log(`❌ Wallet not initialized. Disconnect is allowed`);
+      return;
+    }
+
+    await wallet
+      .disconnectSession({
+        topic: session.topic,
+        reason: getSdkError('USER_DISCONNECTED'),
+      })
+      .catch(() => console.log(`❌ Failed to disconnect the wallet`));
+
+    reset();
+  };
+
   return {
+    onDisconnect,
     wsUri,
     initializeSession,
     reset,
@@ -164,7 +210,6 @@ const useSession = () => {
     wallet,
     session,
     isInitialized,
-
     setWsUri: (wsUri: string) => dispatch(setWsUri(wsUri)),
   };
 };

@@ -9,17 +9,15 @@ interface ISessionProvider {
 }
 
 const SessionProvider = ({ children }: ISessionProvider) => {
-  const { initializeWallet, initializeSession, wsUri, wallet, setWsUri } =
+  const { initializeWallet, initializeSession, wallet, wsUri, session } =
     useSession();
-
-  const { isLoadingTransaction: isSigningTransaction } = useTransaction();
+  console.log(wsUri, session);
+  useEffect(() => {
+    if (wallet && wsUri) initializeSession();
+  }, [wallet, wsUri]);
 
   useEffect(() => {
-    if (wallet) initializeSession();
-  }, [wallet]);
-
-  useEffect(() => {
-    if (!wallet) initializeWallet();
+    if (!wallet) initializeWallet(true);
   }, []);
 
   return children;
