@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { Web3Wallet } from "@walletconnect/web3wallet";
 import { Core } from "@walletconnect/core";
-import { setSession } from "../redux/slices/session";
+import { setSession, setWallet } from "../redux/slices/session";
 import useSendTransaction from "./useSendTransaction";
 
 const WCMetadata = {
@@ -22,6 +22,7 @@ const core = new Core({
 const useSession = () => {
   const {
     sendTransaction,
+    transactionSignature,
     setError: setTransactionError,
     error: txError,
     setTransactionSignature,
@@ -85,6 +86,7 @@ const useSession = () => {
           setIsLoadingTransaction(true);
 
           if (txError) setTransactionError("");
+          if (transactionSignature) setTransactionSignature("");
 
           const txResponse = await sendTransaction({
             from: "0x",
@@ -100,7 +102,7 @@ const useSession = () => {
           setTransactionSignature(txResponse.result);
         } catch (err) {
           const errMessage =
-            "Failed to sign transaction. Please try again later.";
+            "❌ Failed to Sign Transaction. Please try again later.";
 
           await wallet.respondSessionRequest({
             topic,
@@ -120,6 +122,8 @@ const useSession = () => {
         }
       }
     });
+
+    setWallet(wallet);
   }, []);
 
   return {

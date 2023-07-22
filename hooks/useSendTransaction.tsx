@@ -26,6 +26,7 @@ const useSendTransaction = () => {
   const isLoadingTransaction = useSelector(
     (state: RootState) => state.transaction.isLoading
   );
+  const transactionSignature = useSelector((state:RootState)=>state.transaction.transactionSignature)
 
   const sendTransaction = ({
     from,
@@ -44,6 +45,7 @@ const useSendTransaction = () => {
   return {
     isLoadingTransaction,
     sendTransaction,
+    transactionSignature,
     error,
     setTransactionHash: (txHash: string) =>
       dispatch(setTransactionHash(txHash)),
