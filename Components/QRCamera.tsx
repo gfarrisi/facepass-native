@@ -61,7 +61,7 @@
 
 import React, { useState } from 'react';
 import { Views } from '../App';
-import { Button, TextInput, View, Text } from 'react-native';
+import { Button, TextInput, View, Text, ImageBackground } from 'react-native';
 import styles from '../styles';
 import { useWsUri } from '../hooks/useWsUri';
 
@@ -75,8 +75,12 @@ export const QRCamera: React.FC<Props> = (props) => {
   const [text, onChangeText] = React.useState('Copy Link from Wallet Connect');
   const { setWsUri } = useWsUri();
   return (
-    <View style={styles.center}>
-      {/* <QrReader
+    <ImageBackground
+      source={require('../assets/blur.png')}
+      style={styles.imageBackground}
+    >
+      <View style={styles.center}>
+        {/* <QrReader
         constraints={{ facingMode: 'environment' }}
         onResult={(result, error) => {
           console.log({ result, error });
@@ -94,21 +98,22 @@ export const QRCamera: React.FC<Props> = (props) => {
         }}
       />
       <p>{data}</p> */}
-      <Text style={styles.textAddress}>Wallet Connect</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={onChangeText}
-        value={text}
-        onFocus={() => onChangeText('')}
-      />
-      <Button
-        onPress={() => {
-          setWsUri(text);
-          setView('waiting');
-        }}
-        title="connect"
-        color="#079697"
-      />
-    </View>
+        <Text style={styles.textAddress}>Wallet Connect</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={onChangeText}
+          value={text}
+          onFocus={() => onChangeText('')}
+        />
+        <Button
+          onPress={() => {
+            setWsUri(text);
+            setView('waiting');
+          }}
+          title="connect"
+          color="#079697"
+        />
+      </View>
+    </ImageBackground>
   );
 };

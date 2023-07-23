@@ -1,6 +1,14 @@
 //component to tell the user they have been connected and we are waiitng
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button, Pressable, Image } from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  Button,
+  Pressable,
+  Image,
+  ImageBackground,
+} from 'react-native';
 import { Views } from '../App';
 import styles from '../styles';
 import { Icon } from './Icons/Icon';
@@ -25,15 +33,20 @@ export const Success: React.FC<Props> = (props) => {
 
   return (
     <>
-      <View style={styles.container}>
-        <Icon size={150} />
-        <Logo size={150} />
-      </View>
+      <ImageBackground
+        source={require('../assets/blur.png')}
+        style={styles.imageBackground}
+      >
+        <View style={styles.container}>
+          <Icon size={150} />
+          <Logo size={150} />
+        </View>
 
-      <View style={styles.center}>
-        <Text style={styles.text}>SUCCESS!</Text>
-        <Image source={{ uri: './../assets/check.png' }} />
-      </View>
+        <View style={styles.center}>
+          <Text style={styles.text}>SUCCESS!</Text>
+          <Image source={{ uri: './../assets/check.png' }} />
+        </View>
+      </ImageBackground>
     </>
   );
 };

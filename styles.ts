@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
     color: 'white',
     position: 'relative',
     zIndex: 1,
+    // backgroundImage: './../assets/blur.png'
   },
   text: {
     color: 'white',
@@ -60,9 +61,17 @@ const styles = StyleSheet.create({
   dots: {
     position: 'absolute',
   },
+  imageBackground: {
+    flex: 1,
+    width: undefined,
+    height: undefined,
+    resizeMode: 'cover',
+    zIndex: 0,
+    // or 'stretch'
+  },
   banner: {
-    backgroundColor: 'gray',
-    padding: 10,
+    backgroundColor: '#858084',
+    padding: 20,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -77,14 +86,17 @@ const styles = StyleSheet.create({
     opacity: 0.9,
   },
   camera: {
-    height: 200,
-    width: 100,
-    borderRadius: 100,
+    height: 160,
+    width: 150,
+    borderRadius: 200,
     // borderColor: '#079697',
     // borderStyle: 'dot',
     // borderWidth: 5,
   },
-
+  facePulse: {
+    width: 100,
+    height: 100,
+  },
   buttonContainer: {},
   button: {},
   submitButton: {

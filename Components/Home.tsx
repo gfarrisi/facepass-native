@@ -75,7 +75,7 @@ const Home: React.FC<Props> = (props) => {
                 left: dots.left,
                 right: dots.right,
                 bottom: dots.bottom,
-                opacity: 0.4,
+                opacity: 0.5,
               }}
             >
               <Dots size={230} />
