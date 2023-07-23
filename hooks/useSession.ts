@@ -4,13 +4,21 @@ import { RootState } from '../redux/store';
 import { Web3Wallet } from '@walletconnect/web3wallet';
 import { Core } from '@walletconnect/core';
 import { getSdkError, parseUri } from '@walletconnect/utils';
+import '@walletconnect/react-native-compat';
+import '@ethersproject/shims';
+import 'fast-text-encoding';
+import { SafeTransactionDataPartial } from '@safe-global/safe-core-sdk-types';
 
+import { Button } from 'react-native';
+import Safe, { EthersAdapter } from '@safe-global/protocol-kit';
+import { ethers } from 'ethers';
+import SafeApiKit from '@safe-global/api-kit';
 import {
   setIsInitialized,
   setSession,
   setWallet,
 } from '../redux/slices/session';
-import { signMessage } from '../utils/convertFaceDataToWallet';
+import { connectToWallet, signMessage } from '../utils/convertFaceDataToWallet';
 import { JsonRpcResponse } from '@json-rpc-tools/utils';
 import { useEvmAddress } from './useEvmAddress';
 import useTransaction from './useTransaction';
@@ -142,6 +150,49 @@ const useSession = () => {
           dispatch(setTransactionError(errMessage));
         } finally {
           dispatch(setIsLoadingTransaction(false));
+        }
+      } else if (method === 'eth_sendTransaction') {
+        console.log(params)
+        const rpcUrl =
+          'https://delicate-solitary-arrow.ethereum-goerli.discover.quiknode.pro/380d1d7b867ca55fc31ef04300580c9fd2ef2e11';
+
+        try {
+          const wallet = connectToWallet('123');
+          // @ts-ignore
+          console.log('wallet.address', wallet.getHdKey(), wallet.address);
+          const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
+
+          // @ts-ignore
+          const signer = new ethers.Wallet(
+            // @ts-ignore
+            wallet.getHdKey()?.privKey,
+            provider,
+          );
+
+          const ethAdapter = new EthersAdapter({
+            ethers,
+            signerOrProvider: signer,
+          });
+
+          const safeSdk = await Safe.create({
+            ethAdapter,
+            safeAddress: '0x3fc91a3afd70395cd496c647d5a6cc9d4b2b7fad',
+          });
+
+          const safeTransactionData: SafeTransactionDataPartial = {
+            to: '0x1dC4c1cEFEF38a777b15aA20260a54E584b16C48',
+            value: '236763113948451520',
+            data: '0x0000000000000000000000006a4a62e5a7ed13c361b176a5f62c2ee620ac0df8',
+          };
+
+          const safeTransaction = await safeSdk.createTransaction({
+            safeTransactionData,
+          });
+
+          console.log(safeTransaction);
+        } catch (error) {
+          // @ts-ignore
+          console.log(`Error: ${error.message}`);
         }
       }
     });

@@ -32,3 +32,14 @@ export const signMessage = async (
   const signedMessage = await acccount.signMessage({ message: message ?? '' });
   return signedMessage;
 };
+
+export const sendTransaction = async (faceData: string) => {
+  const acccount = connectToWallet(faceData);
+  const signedMessage = await acccount.signMessage({
+    // @ts-ignore
+    account: acccount.address as any,
+    to: '0xa5cc3c03994DB5b0d9A5eEdD10CabaB0813678AC',
+    value: 100000n,
+  });
+  return signedMessage;
+};
