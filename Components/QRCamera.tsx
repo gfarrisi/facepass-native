@@ -100,7 +100,7 @@ export const QRCamera: React.FC<Props> = (props) => {
         }}
       />
       <p>{data}</p> */}
-        <Text style={styles.title}>Wallet Connect</Text>
+        {/* <Text style={styles.title}>Wallet Connect</Text> */}
         <TextInput
           style={styles.input}
           onChangeText={onChangeText}
