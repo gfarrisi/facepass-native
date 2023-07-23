@@ -8,15 +8,11 @@ const customHttpProvider = new ethers.providers.JsonRpcProvider(
 );
 
 export class XMTP {
-  public static sendXMTPNotification = (params: {
+  public static sendXMTPNotification = async (params: {
     pk: string;
     toEVMAddress: string;
     message: string;
   }): Promise<DecodedMessage | void> => {
-    return new Promise((resolve) => {
-      console.log('got to notif');
-      try {
-        void (async () => {
           const { pk, toEVMAddress, message } = params;
           console.log({ pk, toEVMAddress, message });
           const wallet = new ethers.Wallet(pk, customHttpProvider);
@@ -28,22 +24,7 @@ export class XMTP {
 
           const conversation = await xmtp.conversations
             .newConversation(toEVMAddress.toLowerCase())
-            .catch((err) => {
-              // not a real error. Fail silently
-              if (
-                typeof err?.message === 'string' &&
-                err.message.includes('is not on the XMTP network')
-              ) {
-                return resolve();
-              }
-              console.error(err);
-            });
 
-          return resolve(conversation?.send(message));
-        })();
-      } catch (err) {
-        console.error(err);
-      }
-    });
+          return conversation?.send(message).then(()=>console.log("sent message",message));
   };
 }
