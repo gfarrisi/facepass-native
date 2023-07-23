@@ -54,7 +54,7 @@ const useSession = () => {
   const wallet = useSelector((state: RootState) => state.session.wallet);
 
   const wsUri =
-    'wc:44dabd5c5addbb89daaa1271700349427935276acf7f084dece122ceb2920f1f@2?relay-protocol=irn&symKey=949998e3979e03d2f41e3858e9a3d14256b6ec974ac41ed50fba4105bd888d48';
+    'wc:d7b08d434069fd02846ac5cbd120299df59093b8331bcdf12d10dfacffb2ccfd@2?relay-protocol=irn&symKey=18d1de38d52c7e3d3918d4cfa14174d3fd9fcad80331acea9ede1a944d04d701';
 
   const reset = () => {
     deleteEvmAddress();
@@ -101,9 +101,13 @@ const useSession = () => {
     wallet.on('session_request', async (event) => {
       const { topic, params, id } = event;
       const { request } = params;
+      console.log(params, topic, id);
       const { method } = request;
-      if (method === 'eth_personalSign') {
+      if (method === 'personal_sign') {
         try {
+          console.log('request', request);
+          console.log('method', method);
+
           dispatch(setIsLoadingTransaction(true));
 
           if (txError) dispatch(setTransactionError(''));
