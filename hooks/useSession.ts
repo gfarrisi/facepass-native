@@ -53,7 +53,8 @@ const useSession = () => {
 
   const wallet = useSelector((state: RootState) => state.session.wallet);
 
-  const wsUri = useSelector((state: RootState) => state.session.wsUri);
+  const wsUri =
+    'wc:44dabd5c5addbb89daaa1271700349427935276acf7f084dece122ceb2920f1f@2?relay-protocol=irn&symKey=949998e3979e03d2f41e3858e9a3d14256b6ec974ac41ed50fba4105bd888d48';
 
   const reset = () => {
     deleteEvmAddress();
@@ -69,7 +70,7 @@ const useSession = () => {
     }
 
     wallet.on('session_proposal', async (proposal) => {
-      const evmAddress = getEvmAddress(); /* await getEvmAddress(); */
+      const evmAddress = await getEvmAddress(); /* await getEvmAddress(); */
       const { requiredNamespaces } = proposal.params;
       const namespaceKey = 'eip155';
       const requiredNamespace = requiredNamespaces[namespaceKey];
