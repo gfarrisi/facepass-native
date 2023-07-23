@@ -19,7 +19,6 @@ import {
 
 import styles from '../../styles';
 
-
 const WIDTH = 300;
 const HEIGHT = 300;
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useRef, } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Camera, CameraType } from 'expo-camera';
 import {
   Button,
@@ -67,31 +67,31 @@ const FaceScan: React.FC<Props> = (props) => {
       console.log('nul webcam');
       return;
     }
-    if(!isFaceScan) {return}
+    if (!isFaceScan) {
+      return;
+    }
 
     if (results.multiFaceLandmarks) {
       for (const landmarks of results.multiFaceLandmarks) {
         const res = calculatePoints(landmarks);
-        if(res) {
-        
-          if(res.status) {
-            console.log("Done", res.data)
-            setIsFaceScan(false)
-            resolveFaceData(res.data)
-          
-           
+        if (res) {
+          if (res.status) {
+            console.log('Done', res.data);
+            setIsFaceScan(false);
+            resolveFaceData(res.data);
           } else {
             //console.log(res)
           }
         }
-       
       }
     }
   }
 
-  useEffect(() => {  
+  useEffect(() => {
     //-----
-    if(!isWeb) {return;}
+    if (!isWeb) {
+      return;
+    }
     const faceMesh = new FaceMesh({
       locateFile: (file) => {
         return `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`;
@@ -128,7 +128,7 @@ const FaceScan: React.FC<Props> = (props) => {
         <Text style={styles.text}>{message}</Text>
         <Space h={3} />
         {isWeb ? (
-          <Webcam style={styles.camera}  ref={webcamRef} />
+          <Webcam style={styles.camera} ref={webcamRef} />
         ) : (
           <Camera style={styles.camera} type={type}></Camera>
         )}
