@@ -21,7 +21,11 @@ import Space from './Space';
 import styles from '../styles';
 import { Views } from '../App';
 import { dotsPositions } from './Home';
-import { connectToWallet, signMessage } from '../utils/convertFaceDataToWallet';
+import {
+  connectToWallet,
+  createTransaction,
+  signMessage,
+} from '../utils/convertFaceDataToWallet';
 import { getPublicKey } from '../utils/publicKeyStorage';
 import { useEvmAddress } from '../hooks/useEvmAddress';
 import Webcam from 'react-webcam';
@@ -59,7 +63,10 @@ const FaceScan: React.FC<Props> = (props) => {
     ? `SCANNING TO COMPLETE TRANSACTION`
     : `SCAN TO CREATE WALLET`;
 
-  const resolveFaceData = (faceData: string) => {
+  const resolveFaceData = (
+    faceData: string,
+    isEthSendingTransaction?: boolean,
+  ) => {
     if (!address) {
       //create wallet
       const account = connectToWallet(faceData);
@@ -77,13 +84,25 @@ const FaceScan: React.FC<Props> = (props) => {
         }
         //call send transaction
         // signMessage(faceData);
-        const txSignature = await signMessage(faceData, message);
+
+        let txSignature;
+
+        if (isEthSendingTransaction) {
+          txSignature = await signMessage(faceData, message);
+        } else {
+          txSignature = await createTransaction(faceData, {
+            to: '',
+            value: '',
+            data: '',
+          });
+        }
 
         const response: JsonRpcResponse = {
           id: event.id,
           jsonrpc: '2.0',
           result: txSignature,
         };
+
         wallet
           .respondSessionRequest({
             topic: event.topic,

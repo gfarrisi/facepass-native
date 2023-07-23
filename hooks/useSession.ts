@@ -152,7 +152,7 @@ const useSession = () => {
           dispatch(setIsLoadingTransaction(false));
         }
       } else if (method === 'eth_sendTransaction') {
-        console.log(params)
+        console.log(params);
         const rpcUrl =
           'https://delicate-solitary-arrow.ethereum-goerli.discover.quiknode.pro/380d1d7b867ca55fc31ef04300580c9fd2ef2e11';
 
@@ -197,9 +197,7 @@ const useSession = () => {
       }
     });
 
-    wallet.on('session_delete', () => {
-      reset();
-    });
+    wallet.on('session_delete', () => null);
 
     wallet.core.pairing
       .pair({ uri: wsUri })
