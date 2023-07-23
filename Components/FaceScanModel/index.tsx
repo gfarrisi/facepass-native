@@ -19,9 +19,6 @@ import {
 
 import styles from '../../styles';
 
-// interface FaceProps {
-//   frontcamRef_?: React.Ref<null>;
-// }
 
 const WIDTH = 300;
 const HEIGHT = 300;

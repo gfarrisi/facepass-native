@@ -1,7 +1,9 @@
 import * as Facemesh from '@mediapipe/face_mesh';
+import { stringToHex } from 'viem'
 
+const PRECISION = 5
 const THRESHOLD = 100;
-const POINTS_TRAIN = 100;
+const POINTS_TRAIN = 50;
 
 const CAMERA_WIDTH = 300;
 const CAMERA_HEIGHT = 300;
@@ -13,6 +15,14 @@ var avrgMouth = [];
 
 var isSet = false;
 var indexAveg = POINTS_TRAIN;
+
+export const Reset =() =>{
+  avrgLeftEye=[]
+  avrgRightEye=[]
+  avrgMouth=[]
+  isSet = false
+  indexAveg = POINTS_TRAIN;
+}
 
 export const calculatePoints = (prediction) => {
   if (!prediction) return;
@@ -60,7 +70,9 @@ export const calculatePoints = (prediction) => {
       });
     }
   }
-  computeFace();
+ const result = computeFace();
+ 
+ return result;
 };
 
 export const drawMesh = (ctx, prediction) => {
@@ -151,10 +163,15 @@ export const drawMesh = (ctx, prediction) => {
 export const computeFace = () => {
   if (!isSet || indexAveg < 0) {
     isSet = true;
-    return;
+    return {status:false, data:""};
   }
   indexAveg--;
-  if (indexAveg === 0) calculateFace();
+  if (indexAveg === 0) {
+    const str =  calculateFace();
+    return {status:true, data:str};
+  }
+
+  return  {status:false, data:""};
 };
 
 function calculateFace() {
@@ -183,24 +200,28 @@ function calculateFace() {
   const dis_r_m = calculateDistance(area_re.center, area_m.center);
   const dis_l_m = calculateDistance(area_le.center, area_m.center);
 
-  exportData(
-    {
-      // leftEye: avrgLeftEye,
-      leftEyeArea: area_le.area,
-      leftEyeCenter: area_le.center,
-      // rightEye: avrgRightEye,
-      rightEyeArea: area_re.area,
-      rightEyeCenter: area_re.center,
-      //  mouth: avrgMouth,
-      mouthArea: area_m.area,
-      distanceRightLeft: dis_eyes,
-      distanceRightMouth: dis_r_m,
-      distanceLeftMouth: dis_l_m,
-      // mouthCenter:area_m.center
-    },
-    'avrgdata_test',
-  );
+  const str = hashData (Math.ceil(dis_eyes), Math.ceil(dis_r_m), Math.ceil(dis_l_m), Math.ceil(area_le.area), Math.ceil(area_re.area), Math.ceil(area_m.area))
+  return str
+  // hashData (dis_eyes, dis_r_m, dis_l_m, area_le.area, area_re.area, area_m.area)
+//   exportData(
+//     {
+//       // leftEye: avrgLeftEye,
+//       leftEyeArea: area_le.area,
+//       leftEyeCenter: area_le.center,
+//       // rightEye: avrgRightEye,
+//       rightEyeArea: area_re.area,
+//       rightEyeCenter: area_re.center,
+//       //  mouth: avrgMouth,
+//       mouthArea: area_m.area,
+//       distanceRightLeft: dis_eyes,
+//       distanceRightMouth: dis_r_m,
+//       distanceLeftMouth: dis_l_m,
+//       // mouthCenter:area_m.center
+//     },
+//     'avrgdata_test_',
+//   );
 }
+
 function calculatePolygonAreaCenter(vertices) {
   if (vertices.length < 3) {
     // A polygon with less than 3 vertices is not valid.
@@ -230,7 +251,8 @@ function calculatePolygonAreaCenter(vertices) {
   const centerY = sumY / vertices.length;
   // Calculate the absolute value and divide by 2 to get the area.
   area = Math.abs(area / 2);
-  center = [centerX, centerY];
+  area = area.toFixed(PRECISION)
+  center = [centerX.toFixed(PRECISION), centerY.toFixed(PRECISION)];
   return { area, center };
 }
 
@@ -238,7 +260,7 @@ function calculateDistance(vertex1, vertex2) {
   const distance = Math.sqrt(
     Math.pow(vertex2[0] - vertex1[0], 2) + Math.pow(vertex2[1] - vertex1[1], 2),
   );
-  return distance;
+  return distance.toFixed(PRECISION);
 }
 
 const exportData = (data, name) => {
@@ -251,3 +273,14 @@ const exportData = (data, name) => {
 
   link.click();
 };
+
+const hashData = (disEyes, disEleftM, disLeftM, areaLE, areaRE, areaM) => {
+  const hashStr = "_dis_eyes_"+disEyes+"_dis_el_m_"+disEleftM +"_dis_er_m_"+disLeftM +
+  "_area_l_eyes_"+areaLE+"_area_r_eyes_"+areaRE;//"_area_mouth_"+areaM;
+
+  console.log(hashStr)
+  // const hex = stringToHex(hashStr, { size: 128 })
+  // console.log(hex)
+
+  return hashStr
+}

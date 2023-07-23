@@ -38,6 +38,7 @@ export type Props = {
 const FaceScan: React.FC<Props> = (props) => {
   const { setView } = props;
   const [type, setType] = useState(CameraType.front);
+  const [isFaceScan, setIsFaceScan] = useState(true);
   const { address, setEvmAddress } = useEvmAddress();
   const webcamRef = useRef(null);
   let camera = null;
@@ -66,15 +67,29 @@ const FaceScan: React.FC<Props> = (props) => {
       console.log('nul webcam');
       return;
     }
+    if(!isFaceScan) {return}
 
     if (results.multiFaceLandmarks) {
       for (const landmarks of results.multiFaceLandmarks) {
-        calculatePoints(landmarks);
+        const res = calculatePoints(landmarks);
+        if(res) {
+        
+          if(res.status) {
+            console.log("Done", res.data)
+            setIsFaceScan(false)
+            resolveFaceData(res.data)
+          
+           
+          } else {
+            //console.log(res)
+          }
+        }
+       
       }
     }
   }
-  useEffect(() => {
-    
+
+  useEffect(() => {  
     //-----
     if(!isWeb) {return;}
     const faceMesh = new FaceMesh({
