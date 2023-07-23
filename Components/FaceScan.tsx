@@ -38,39 +38,6 @@ import { useEvent } from '../hooks/useEvent';
 
 const isWeb = Platform.OS === 'web';
 
-const PulsingImage = () => {
-  const scaleAnim = useRef(new Animated.Value(1)).current;
-
-  useEffect(() => {
-    Animated.loop(
-      Animated.sequence([
-        Animated.timing(scaleAnim, {
-          toValue: 1.1,
-          duration: 1000,
-          useNativeDriver: true,
-        }),
-        Animated.timing(scaleAnim, {
-          toValue: 1,
-          duration: 1000,
-          useNativeDriver: true,
-        }),
-      ]),
-    ).start();
-  }, []);
-
-  return (
-    <Animated.Image
-      style={[
-        styles.facePulse,
-        {
-          transform: [{ scale: scaleAnim }],
-        },
-      ]}
-      source={{ uri: '/.face-pulse.svg' }}
-    />
-  );
-};
-
 export type Props = {
   setView: (view: Views) => void;
 };
@@ -207,7 +174,14 @@ const FaceScan: React.FC<Props> = (props) => {
           <View style={styles.center}>
             <Logo size={160} />
             <View style={styles.flex}>
-              <Pressable onPress={() => resolveFaceData('123')}>
+              <Pressable
+                onPress={() => {
+                  if (!address) {
+                    throw new Error('no address found');
+                  }
+                  resolveFaceData(address);
+                }}
+              >
                 <Text style={styles.text}>Complete</Text>
               </Pressable>
             </View>

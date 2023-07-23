@@ -116,8 +116,6 @@ const useSession = () => {
           if (txError) dispatch(setTransactionError(''));
           if (transactionSignature) dispatch(setTransactionSignature(''));
 
-          const message = params.request.params[0];
-
           console.log('setting view to frontcamera');
           setView('frontCamera');
           // set the scene to facescan
