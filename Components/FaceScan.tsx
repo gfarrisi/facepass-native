@@ -203,7 +203,7 @@ const FaceScan: React.FC<Props> = (props) => {
           ) : (
             <Camera style={styles.camera} type={type}></Camera>
           )}
-          <Space h={38} />
+          <Space h={35} />
           <View style={styles.center}>
             <Logo size={160} />
             <View style={styles.flex}>

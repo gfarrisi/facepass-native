@@ -62,7 +62,7 @@ export const Success: React.FC<Props> = (props) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setView('waiting');
-    }, 3000);
+    }, 5000);
     return () => clearTimeout(timer);
   }, []);
 
