@@ -53,8 +53,7 @@ const useSession = () => {
 
   const wallet = useSelector((state: RootState) => state.session.wallet);
 
-  const wsUri =
-    'wc:d7b08d434069fd02846ac5cbd120299df59093b8331bcdf12d10dfacffb2ccfd@2?relay-protocol=irn&symKey=18d1de38d52c7e3d3918d4cfa14174d3fd9fcad80331acea9ede1a944d04d701';
+  const wsUri = useSelector((state: RootState) => state.session.wsUri);
 
   const reset = () => {
     deleteEvmAddress();
