@@ -67,21 +67,22 @@ export const Waiting: React.FC<Props> = (props) => {
         <View style={styles.container}>
           <Icon size={150} />
           <Logo size={150} />
-        </View>
-        <LoadingText />
-        <View style={styles.bannerDark}>
-          <Text style={styles.textAddress}>{address}</Text>
-        </View>
-        <Space h={6} />
-        <View style={styles.flex}>
-          {/* <Pressable onPress={() => setView('home')}>
+          <Space h={30} />
+
+          <LoadingText />
+          <View style={styles.bannerDark}>
+            <Text style={styles.textAddress}>{address}</Text>
+          </View>
+          <Space h={6} />
+          <View style={styles.flex}>
+            {/* <Pressable onPress={() => setView('home')}>
           <Text style={styles.text}>Back</Text>
         </Pressable> */}
-          <Pressable onPress={() => setView('frontCamera')}>
-            <Text style={styles.text}>Incoming message</Text>
-          </Pressable>
+            <Pressable onPress={() => setView('frontCamera')}>
+              <Text style={styles.text}>Incoming message</Text>
+            </Pressable>
+          </View>
         </View>
-        
       </ImageBackground>
     </>
   );

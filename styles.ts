@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
     padding: 10,
     color: '#079697',
     backgroundColor: 'white',
+    borderRadius: 5,
   },
   dots: {
     position: 'absolute',
@@ -95,6 +96,7 @@ const styles = StyleSheet.create({
     opacity: 0.7,
     backgroundColor: 'black',
     padding: 5,
+    borderRadius: 5,
   },
   linearGradient: {
     flex: 1,

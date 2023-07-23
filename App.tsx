@@ -24,9 +24,9 @@ const App: React.FC = () => {
   const [view, setView] = useState<Views>('frontCamera');
   const { address } = useEvmAddress();
 
-  useEffect(() => {
-    if (address && view === 'frontCamera') setView('qrCamera');
-  }, [address]);
+  // useEffect(() => {
+  //   if (address && view === 'frontCamera') setView('frontCamera');
+  // }, [address]);
 
   return (
     <AppProvider>

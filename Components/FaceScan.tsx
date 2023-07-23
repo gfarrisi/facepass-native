@@ -172,22 +172,14 @@ const FaceScan: React.FC<Props> = (props) => {
           ) : (
             <Camera style={styles.camera} type={type}></Camera>
           )}
-          <Space h={25} />
+          <Space h={38} />
           <View style={styles.center}>
-            {/* <Image
-            source={require('./../assets/facescan-pulse.gif')}
-            style={{ width: 200, height: 200 }}
-          /> */}
-            {/* <FacePulse size={1000}/> */}
-          </View>
-        </View>
-        <Space h={25} />
-        <View style={styles.flex}>
-          <Logo size={160} />
-          <View style={styles.flex}>
-            <Pressable onPress={() => resolveFaceData('123')}>
-              <Text style={styles.text}>Complete</Text>
-            </Pressable>
+            <Logo size={160} />
+            <View style={styles.flex}>
+              <Pressable onPress={() => resolveFaceData('123')}>
+                <Text style={styles.text}>Complete</Text>
+              </Pressable>
+            </View>
           </View>
         </View>
 
