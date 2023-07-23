@@ -12,7 +12,7 @@ export type Props = {
   setView: (view: Views) => void;
 };
 
-export const Waiting: React.FC<Props> = (props) => {
+export const Success: React.FC<Props> = (props) => {
   const { setView } = props;
   const { address } = useEvmAddress();
 
@@ -24,19 +24,12 @@ export const Waiting: React.FC<Props> = (props) => {
       </View>
 
       <View style={styles.banner}>
-        <Text style={styles.text}>WAITING FOR TRANSACTiON</Text>
+        <Text style={styles.text}>SUCCESS!</Text>
       </View>
       <Space h={1} />
       <View style={styles.flex}>
-        <Text style={styles.textAddress}>{address}</Text>
-      </View>
-      <Space h={4} />
-      <View style={styles.flex}>
-        {/* <Pressable onPress={() => setView('home')}>
-          <Text style={styles.text}>Back</Text>
-        </Pressable> */}
-        <Pressable onPress={() => setView('frontCamera')}>
-          <Text style={styles.text}>Incoming message</Text>
+        <Pressable onPress={() => setView('waiting')}>
+          <Text style={styles.text}>go back to waiting</Text>
         </Pressable>
       </View>
     </>

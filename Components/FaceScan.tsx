@@ -23,6 +23,7 @@ import { dotsPositions } from './Home';
 import { connectToWallet, signMessage } from '../utils/convertFaceDataToWallet';
 import { getPublicKey } from '../utils/publicKeyStorage';
 import { useEvmAddress } from '../hooks/useEvmAddress';
+import Webcam from 'react-webcam';
 
 const isWeb = Platform.OS === 'web';
 
@@ -46,11 +47,11 @@ const FaceScan: React.FC<Props> = (props) => {
       console.log('account___', { account });
       setEvmAddress(account.address);
       // setPublicKey(account.address);
-      setView('waiting');
+      setView('qrCamera');
     } else {
       //call send transaction
-      faceData && signMessage(faceData);
-      setView('waiting');
+      signMessage(faceData);
+      setView('successs');
     }
   };
 
@@ -60,7 +61,11 @@ const FaceScan: React.FC<Props> = (props) => {
         <LinearGradient colors={['rgba(0,0,0,0.8)', 'transparent']} />
         <Text style={styles.text}>{message}</Text>
         <Space h={3} />
-        {!isWeb && <Camera style={styles.camera} type={type}></Camera>}
+        {isWeb ? (
+          <Webcam style={styles.camera} />
+        ) : (
+          <Camera style={styles.camera} type={type}></Camera>
+        )}
         <Space h={25} />
         <View style={styles.center}>
           <Image

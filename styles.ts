@@ -1,19 +1,27 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
+
+const isWeb = Platform.OS === 'web';
 
 const styles = StyleSheet.create({
   app: {
     backgroundColor: 'black',
-    background: 'linear-gradient(45deg, #4c669f, #3b5998, #192f6a)',
-    width: '100%',
-    height: '100%',
+    width: isWeb ? '100vw' : '100%',
+    height: isWeb ? '95vh' : '100%',
     color: 'white',
     position: 'relative',
     zIndex: 1,
   },
   text: {
     color: 'white',
-    // fontFamily: 'Serif',
+    fontFamily: 'serif',
     fontSize: 17,
+    zIndex: 10,
+  },
+  textAddress: {
+    color: 'white',
+    fontFamily: 'helvetica',
+    fontSize: 14,
+    fontWeight: '600',
     zIndex: 10,
   },
   logo: {
@@ -23,8 +31,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    paddingTop: 100,
-    paddingBottom: 100,
+    paddingTop: isWeb ? 50 : 100,
+    paddingBottom: isWeb ? 10 : 100,
     color: 'white',
     zIndex: 100,
   },
@@ -42,6 +50,12 @@ const styles = StyleSheet.create({
   dots: {
     position: 'absolute',
   },
+  banner: {
+    backgroundColor: 'gray',
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   linearGradient: {
     flex: 1,
     position: 'absolute',
@@ -53,13 +67,14 @@ const styles = StyleSheet.create({
     opacity: 0.9,
   },
   camera: {
-    height: 100,
+    height: 200,
     width: 100,
-    // borderRadius: 3,
+    borderRadius: 100,
     // borderColor: '#079697',
     // borderStyle: 'dot',
     // borderWidth: 5,
   },
+
   buttonContainer: {},
   button: {},
 });
