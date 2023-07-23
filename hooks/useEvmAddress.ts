@@ -1,6 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { atom, useAtom } from 'jotai';
-import { store } from '../redux/store';
 import { connectToWallet } from '../utils/convertFaceDataToWallet';
 const addressAtom = atom<string | null>(null);
 

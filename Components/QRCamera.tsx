@@ -63,7 +63,7 @@ import React, { useState } from 'react';
 import { Views } from '../App';
 import { Button, TextInput, View, Text } from 'react-native';
 import styles from '../styles';
-import { setWsUri } from '../redux/slices/session';
+import { useWsUri } from '../hooks/useWsUri';
 
 export type Props = {
   setView: (view: Views) => void;
@@ -73,6 +73,7 @@ export const QRCamera: React.FC<Props> = (props) => {
   const { setView } = props;
   const [data, setData] = useState('No result');
   const [text, onChangeText] = React.useState('Copy Link from Wallet Connect');
+  const { setWsUri } = useWsUri();
   return (
     <View style={styles.center}>
       {/* <QrReader

@@ -4,7 +4,6 @@ import { createAction } from '@reduxjs/toolkit';
 import { SessionTypes } from '@walletconnect/types';
 
 interface InitialState {
-  wsUri: string;
   wallet: IWeb3Wallet | null;
   session: SessionTypes.Struct | null;
   isInitialized: boolean;
@@ -24,14 +23,11 @@ export const setSession = createAction<
   'setSession'
 >('setSession');
 
-export const setWsUri = createAction<string, 'setWsUri'>('setWsUri');
-
 export const setIsInitialized = createAction<boolean, 'setIsInitialized'>(
   'setIsInitialized',
 );
 
 const initialState: InitialState = {
-  wsUri: '',
   isLoading: false,
   wallet: null,
   session: null,
@@ -40,9 +36,6 @@ const initialState: InitialState = {
 
 export const sessionSlice = createReducer(initialState, (builder) => {
   builder
-    .addCase(setWsUri, (state, action) => {
-      state.wsUri = action.payload;
-    })
     .addCase(setSession, (state, action) => {
       state.session = action.payload;
     })
