@@ -24,7 +24,7 @@ export const Waiting: React.FC<Props> = (props) => {
       </View>
 
       <View style={styles.banner}>
-        <Text style={styles.text}>WAITING FOR TRANSACTiON</Text>
+        <Text style={styles.text}>WAITING FOR TRANSACTION</Text>
       </View>
       <Space h={1} />
       <View style={styles.flex}>

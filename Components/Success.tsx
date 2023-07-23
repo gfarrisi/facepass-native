@@ -1,6 +1,6 @@
 //component to tell the user they have been connected and we are waiitng
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button, Pressable } from 'react-native';
+import { Text, View, StyleSheet, Button, Pressable, Image } from 'react-native';
 import { Views } from '../App';
 import styles from '../styles';
 import { Icon } from './Icons/Icon';
@@ -16,6 +16,13 @@ export const Success: React.FC<Props> = (props) => {
   const { setView } = props;
   const { address } = useEvmAddress();
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setView('waiting');
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <>
       <View style={styles.container}>
@@ -23,14 +30,9 @@ export const Success: React.FC<Props> = (props) => {
         <Logo size={150} />
       </View>
 
-      <View style={styles.banner}>
+      <View style={styles.center}>
         <Text style={styles.text}>SUCCESS!</Text>
-      </View>
-      <Space h={1} />
-      <View style={styles.flex}>
-        <Pressable onPress={() => setView('waiting')}>
-          <Text style={styles.text}>go back to waiting</Text>
-        </Pressable>
+        <Image source={{ uri: './../assets/check.png' }} />
       </View>
     </>
   );

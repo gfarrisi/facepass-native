@@ -4,15 +4,17 @@ import { RootState } from '../redux/store';
 import { Web3Wallet } from '@walletconnect/web3wallet';
 import { Core } from '@walletconnect/core';
 import { getSdkError, parseUri } from '@walletconnect/utils';
-import { useWsUri } from './useWsUri';
 
-import useTransaction from './useTransaction';
 import {
   setIsInitialized,
   setSession,
   setWallet,
 } from '../redux/slices/session';
+import { signMessage } from '../utils/convertFaceDataToWallet';
+import { JsonRpcResponse } from '@json-rpc-tools/utils';
 import { useEvmAddress } from './useEvmAddress';
+import useTransaction from './useTransaction';
+import { useWsUri } from './useWsUri';
 
 const WCMetadata = {
   name: 'FACE PASS',
@@ -28,6 +30,7 @@ const core = new Core({
 });
 
 const useSession = () => {
+  const { wsUri, setWsUri } = useWsUri();
   const {
     sendTransaction,
     transactionSignature,
@@ -36,7 +39,6 @@ const useSession = () => {
     setTransactionSignature,
     setIsLoading: setIsLoadingTransaction,
   } = useTransaction();
-  const { wsUri, setWsUri } = useWsUri();
 
   const { getEvmAddress } = useEvmAddress();
 
@@ -66,8 +68,7 @@ const useSession = () => {
     }
 
     wallet.on('session_proposal', async (proposal) => {
-      const evmAddress =
-        '0x9A9A200C587f49f9783B041225269Ea2a307495B'; /* await getEvmAddress(); */
+      const evmAddress = await getEvmAddress(); /* await getEvmAddress(); */
       const { requiredNamespaces } = proposal.params;
       const namespaceKey = 'eip155';
       const requiredNamespace = requiredNamespaces[namespaceKey];
@@ -98,27 +99,34 @@ const useSession = () => {
     wallet.on('session_request', async (event) => {
       const { topic, params, id } = event;
       const { request } = params;
+      console.log(params, topic, id);
       const { method } = request;
-
-      if (method === 'eth_sendTransaction') {
+      if (method === 'personal_sign') {
         try {
+          console.log('request', request);
+          console.log('method', method);
+
           dispatch(setIsLoadingTransaction(true));
 
           if (txError) dispatch(setTransactionError(''));
           if (transactionSignature) dispatch(setTransactionSignature(''));
 
-          const txSignature = await sendTransaction({
-            from: '0x',
-            to: '0x',
-            data: '0x',
-          });
+          const message = params.request.params[0];
+          console.log({ message });
+          // const txSignature = wallet.
+          const txSignature = await signMessage('123', message);
 
+          const response: JsonRpcResponse = {
+            id,
+            jsonrpc: '2.0',
+            result: txSignature,
+          };
           await wallet.respondSessionRequest({
             topic,
-            response: txSignature,
+            response,
           });
 
-          dispatch(setTransactionSignature(txSignature.result));
+          // dispatch(setTransactionSignature(txSignature.result));
         } catch (err) {
           const errMessage =
             '❌ Failed to Sign Transaction. Please try again later.';
@@ -148,6 +156,9 @@ const useSession = () => {
 
     wallet.core.pairing
       .pair({ uri: wsUri })
+      .then(() => {
+        console.log(`Paired  wallet connect w/ws "${wsUri}"`);
+      })
       .catch((err) =>
         console.log(`❌ Failed to pair wallet connect. Error: ${err.message}`),
       );
@@ -209,6 +220,7 @@ const useSession = () => {
     wallet,
     session,
     isInitialized,
+    setWsUri,
   };
 };
 

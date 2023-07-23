@@ -25,7 +25,7 @@ const App: React.FC = () => {
   const { address } = useEvmAddress();
 
   useEffect(() => {
-    if (address && view === 'frontCamera') setView('waiting');
+    if (address && view === 'frontCamera') setView('qrCamera');
   }, [address]);
 
   return (

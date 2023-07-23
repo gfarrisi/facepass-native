@@ -6,14 +6,15 @@ const styles = StyleSheet.create({
   app: {
     backgroundColor: 'black',
     width: isWeb ? '100vw' : '100%',
-    height: isWeb ? '95vh' : '100%',
+    height: isWeb ? '100vh' : '100%',
     color: 'white',
     position: 'relative',
     zIndex: 1,
   },
   text: {
     color: 'white',
-    fontFamily: 'serif',
+    // fontFamily: 'serif',
+    fontFamily: 'helvetica',
     fontSize: 17,
     zIndex: 10,
   },
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
     color: 'white',
     fontFamily: 'helvetica',
     fontSize: 14,
-    fontWeight: '600',
+    // fontWeight: '600',
     zIndex: 10,
   },
   logo: {
@@ -46,6 +47,15 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  input: {
+    height: 40,
+    width: 300,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
+    color: '#079697',
+    backgroundColor: 'white',
   },
   dots: {
     position: 'absolute',
@@ -77,6 +87,9 @@ const styles = StyleSheet.create({
 
   buttonContainer: {},
   button: {},
+  submitButton: {
+    backgroundColor: '#079697',
+  },
 });
 
 export default styles;
