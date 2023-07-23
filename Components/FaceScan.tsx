@@ -30,7 +30,7 @@ import { Animated } from 'react-native';
 
 import { FaceMesh } from '@mediapipe/face_mesh';
 import * as cam from '@mediapipe/camera_utils';
-import { calculatePoints } from './FaceScanModel/findFace';
+import { Reset, calculatePoints } from './FaceScanModel/findFace';
 import { JsonRpcResponse } from '@json-rpc-tools/utils';
 import { id } from 'ethers/lib/utils';
 import useSession from '../hooks/useSession';
@@ -84,6 +84,9 @@ const FaceScan: React.FC<Props> = (props) => {
   const { event } = useEvent();
   const webcamRef = useRef(null);
   let camera = null;
+  useEffect(() => {
+    Reset();
+  }, []);
 
   const message = address
     ? `SCANNING TO COMPLETE TRANSACTION`
@@ -196,7 +199,7 @@ const FaceScan: React.FC<Props> = (props) => {
           <Text style={styles.text}>{message}</Text>
           <Space h={3} />
           {isWeb ? (
-            <Webcam style={styles.camera} />
+            <Webcam style={styles.camera} ref={webcamRef} />
           ) : (
             <Camera style={styles.camera} type={type}></Camera>
           )}
