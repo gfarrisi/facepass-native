@@ -4,13 +4,21 @@ import { RootState } from '../redux/store';
 import { Web3Wallet } from '@walletconnect/web3wallet';
 import { Core } from '@walletconnect/core';
 import { getSdkError, parseUri } from '@walletconnect/utils';
+import '@walletconnect/react-native-compat';
+import '@ethersproject/shims';
+import 'fast-text-encoding';
+import { SafeTransactionDataPartial } from '@safe-global/safe-core-sdk-types';
 
+import { Button } from 'react-native';
+import Safe, { EthersAdapter } from '@safe-global/protocol-kit';
+import { ethers } from 'ethers';
+import SafeApiKit from '@safe-global/api-kit';
 import {
   setIsInitialized,
   setSession,
   setWallet,
 } from '../redux/slices/session';
-import { signMessage } from '../utils/convertFaceDataToWallet';
+import { connectToWallet, signMessage } from '../utils/convertFaceDataToWallet';
 import { JsonRpcResponse } from '@json-rpc-tools/utils';
 import { useEvmAddress } from './useEvmAddress';
 import useTransaction from './useTransaction';
@@ -146,9 +154,7 @@ const useSession = () => {
       }
     });
 
-    wallet.on('session_delete', () => {
-      reset();
-    });
+    wallet.on('session_delete', () => null);
 
     wallet.core.pairing
       .pair({ uri: wsUri })
