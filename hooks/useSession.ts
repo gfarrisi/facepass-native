@@ -15,6 +15,8 @@ import { JsonRpcResponse } from '@json-rpc-tools/utils';
 import { useEvmAddress } from './useEvmAddress';
 import useTransaction from './useTransaction';
 import { useWsUri } from './useWsUri';
+import { useView } from './useView';
+import { useEvent } from './useEvent';
 
 const WCMetadata = {
   name: 'FACE PASS',
@@ -31,6 +33,7 @@ const core = new Core({
 
 const useSession = () => {
   const { wsUri, setWsUri } = useWsUri();
+  const { setView } = useView();
   const {
     sendTransaction,
     transactionSignature,
@@ -53,6 +56,7 @@ const useSession = () => {
   const session = useSelector((state: RootState) => state.session.session);
 
   const wallet = useSelector((state: RootState) => state.session.wallet);
+  const { setEvent } = useEvent();
 
   const reset = () => {
     deleteEvmAddress();
@@ -99,10 +103,11 @@ const useSession = () => {
     wallet.on('session_request', async (event) => {
       const { topic, params, id } = event;
       const { request } = params;
-      console.log(params, topic, id);
       const { method } = request;
+      console.log(method);
       if (method === 'personal_sign') {
         try {
+          setEvent(event);
           console.log('request', request);
           console.log('method', method);
 
@@ -112,24 +117,17 @@ const useSession = () => {
           if (transactionSignature) dispatch(setTransactionSignature(''));
 
           const message = params.request.params[0];
-          console.log({ message });
-          // const txSignature = wallet.
-          const txSignature = await signMessage('123', message);
 
-          const response: JsonRpcResponse = {
-            id,
-            jsonrpc: '2.0',
-            result: txSignature,
-          };
-          await wallet.respondSessionRequest({
-            topic,
-            response,
-          });
+          console.log('setting view to frontcamera');
+          setView('frontCamera');
+          // set the scene to facescan
+          // const faceData = await getFaceData();
 
           // dispatch(setTransactionSignature(txSignature.result));
         } catch (err) {
           const errMessage =
             '❌ Failed to Sign Transaction. Please try again later.';
+          console.error(errMessage);
 
           await wallet.respondSessionRequest({
             topic,

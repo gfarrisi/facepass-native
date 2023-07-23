@@ -1,4 +1,5 @@
 import * as Facemesh from '@mediapipe/face_mesh';
+import { stringToHex } from 'viem';
 
 const PRECISION = 5;
 const THRESHOLD = 100;
