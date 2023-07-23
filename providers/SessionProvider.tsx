@@ -16,8 +16,8 @@ const SessionProvider = ({ children }: ISessionProvider) => {
   const { isLoadingTransaction: isSigningTransaction } = useTransaction();
 
   useEffect(() => {
-    if (wallet) initializeSession();
-  }, [wallet]);
+    if (wallet && wsUri) initializeSession();
+  }, [wallet, wsUri]);
 
   useEffect(() => {
     getEvmAddress(); // loads up evm address from async storage into memory
