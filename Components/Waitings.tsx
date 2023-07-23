@@ -35,7 +35,7 @@ export const Waiting: React.FC<Props> = (props) => {
         {/* <Pressable onPress={() => setView('home')}>
           <Text style={styles.text}>Back</Text>
         </Pressable> */}
-        <Pressable onPress={() => setView('home')}>
+        <Pressable onPress={() => setView('frontCamera')}>
           <Text style={styles.text}>Incoming message</Text>
         </Pressable>
       </View>
