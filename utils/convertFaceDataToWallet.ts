@@ -6,7 +6,7 @@ type HexString = `0x${string}`;
 const computeHexString = (data: string): HexString => {
   //@todo: update with data from face scan and convert to hex string
   const len = 128;
-  const hex = `0x${new Array(len + 1).join('0')}` as HexString;
+  const hex = `0x${new Array(len + 1).join('1')}` as HexString;
   return hex;
 };
 

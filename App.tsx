@@ -7,14 +7,21 @@ import AppProvider from './providers/AppProvider';
 import FaceScan from './Components/FaceScan';
 import { QRCamera } from './Components/QRCamera';
 import { Waiting } from './Components/Waitings';
+import { Button, Text } from 'react-native';
+import { signMessage } from './utils/convertFaceDataToWallet';
 
 export type Views = 'home' | 'qrCamera' | 'frontCamera' | 'waiting' | 'sucesss';
 
 const App: React.FC = () => {
   const [view, setView] = useState<Views>('frontCamera');
+
   return (
     <AppProvider>
-      {view === 'home' ? (
+      <Button
+        onPress={() => signMessage('123', 'yo')}
+        title={'touch this...'}
+      />
+      {/*  {view === 'home' ? (
         <Home view={view} setView={setView} />
       ) : view === 'qrCamera' ? (
         <QRCamera setView={setView} />
@@ -24,7 +31,7 @@ const App: React.FC = () => {
         <Waiting setView={setView} />
       ) : (
         <></>
-      )}
+      )} */}
     </AppProvider>
   );
 };

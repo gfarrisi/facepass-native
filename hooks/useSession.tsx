@@ -67,8 +67,7 @@ const useSession = () => {
     }
 
     wallet.on('session_proposal', async (proposal) => {
-      const evmAddress =
-        '0x9A9A200C587f49f9783B041225269Ea2a307495B'; /* await getEvmAddress(); */
+      const evmAddress = getEvmAddress(); /* await getEvmAddress(); */
       const { requiredNamespaces } = proposal.params;
       const namespaceKey = 'eip155';
       const requiredNamespace = requiredNamespaces[namespaceKey];
@@ -100,7 +99,7 @@ const useSession = () => {
       const { topic, params, id } = event;
       const { request } = params;
       const { method } = request;
-
+      console.log(method);
       if (method === 'eth_sendTransaction') {
         try {
           dispatch(setIsLoadingTransaction(true));
