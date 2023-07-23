@@ -7,8 +7,8 @@ import AppProvider from './providers/AppProvider';
 import FaceScan from './Components/FaceScan';
 import { QRCamera } from './Components/QRCamera';
 import { Waiting } from './Components/Waitings';
-import { Button, Text } from 'react-native';
-import { signMessage } from './utils/convertFaceDataToWallet';
+import { Success } from './Components/Success';
+import { useEvmAddress } from './hooks/useEvmAddress';
 
 export type Views =
   | 'home'
@@ -19,14 +19,15 @@ export type Views =
 
 const App: React.FC = () => {
   const [view, setView] = useState<Views>('frontCamera');
+  const { address } = useEvmAddress();
+
+  useEffect(() => {
+    if (address && view === 'frontCamera') setView('waiting');
+  }, [address]);
 
   return (
     <AppProvider>
-      <Button
-        onPress={() => signMessage('123', 'yo')}
-        title={'touch this...'}
-      />
-      {/*  {view === 'home' ? (
+      {view === 'home' ? (
         <Home view={view} setView={setView} />
       ) : view === 'qrCamera' ? (
         <QRCamera setView={setView} />
@@ -38,7 +39,7 @@ const App: React.FC = () => {
         <Success setView={setView} />
       ) : (
         <></>
-      )} */}
+      )}
     </AppProvider>
   );
 };
