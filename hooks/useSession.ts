@@ -151,49 +151,6 @@ const useSession = () => {
         } finally {
           dispatch(setIsLoadingTransaction(false));
         }
-      } else if (method === 'eth_sendTransaction') {
-        console.log(params);
-        const rpcUrl =
-          'https://delicate-solitary-arrow.ethereum-goerli.discover.quiknode.pro/380d1d7b867ca55fc31ef04300580c9fd2ef2e11';
-
-        try {
-          const wallet = connectToWallet('123');
-          // @ts-ignore
-          console.log('wallet.address', wallet.getHdKey(), wallet.address);
-          const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
-
-          // @ts-ignore
-          const signer = new ethers.Wallet(
-            // @ts-ignore
-            wallet.getHdKey()?.privKey,
-            provider,
-          );
-
-          const ethAdapter = new EthersAdapter({
-            ethers,
-            signerOrProvider: signer,
-          });
-
-          const safeSdk = await Safe.create({
-            ethAdapter,
-            safeAddress: '0x3fc91a3afd70395cd496c647d5a6cc9d4b2b7fad',
-          });
-
-          const safeTransactionData: SafeTransactionDataPartial = {
-            to: '0x1dC4c1cEFEF38a777b15aA20260a54E584b16C48',
-            value: '236763113948451520',
-            data: '0x0000000000000000000000006a4a62e5a7ed13c361b176a5f62c2ee620ac0df8',
-          };
-
-          const safeTransaction = await safeSdk.createTransaction({
-            safeTransactionData,
-          });
-
-          console.log(safeTransaction);
-        } catch (error) {
-          // @ts-ignore
-          console.log(`Error: ${error.message}`);
-        }
       }
     });
 
