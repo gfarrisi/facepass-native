@@ -31,11 +31,11 @@ export const dotsPositions = [
     top: 0,
   },
   {
-    right: -100,
-    top: 250,
+    right: isWeb ? -150 : -100,
+    top: isWeb ? 100 : 250,
   },
   {
-    left: -100,
+    left: isWeb ? -150 : -100,
     bottom: 130,
   },
   {

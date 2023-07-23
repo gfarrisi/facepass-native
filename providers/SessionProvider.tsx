@@ -9,7 +9,7 @@ interface ISessionProvider {
 }
 
 const SessionProvider = ({ children }: ISessionProvider) => {
-  const { initializeWallet, initializeSession, wsUri, wallet, setWsUri } =
+  const { initializeWallet, initializeSession, wallet, wsUri, session } =
     useSession();
   const { getEvmAddress } = useEvmAddress();
 

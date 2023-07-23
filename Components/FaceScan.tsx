@@ -20,9 +20,10 @@ import Space from './Space';
 import styles from '../styles';
 import { Views } from '../App';
 import { dotsPositions } from './Home';
-import { signMessage } from '../utils/convertFaceDataToWallet';
+import { connectToWallet, signMessage } from '../utils/convertFaceDataToWallet';
 import { getPublicKey } from '../utils/publicKeyStorage';
 import { useEvmAddress } from '../hooks/useEvmAddress';
+import Webcam from 'react-webcam';
 
 const isWeb = Platform.OS === 'web';
 
@@ -33,32 +34,24 @@ export type Props = {
 const FaceScan: React.FC<Props> = (props) => {
   const { setView } = props;
   const [type, setType] = useState(CameraType.front);
-  const [address, setAddress] = useState<string>();
-
-  useEffect(() => {
-    const getPublicKeyFromStorage = async () => {
-      const { getEvmAddress, setEvmAddress } = await useEvmAddress();
-      const address = await getEvmAddress();
-      if (!address) return;
-      setAddress(address);
-    };
-    getPublicKeyFromStorage();
-  }, []);
-
-  //   const evmAddress = await getEvmAddress()
+  const { address, setEvmAddress } = useEvmAddress();
 
   const message = address
     ? `SCANNING TO COMPLETE TRANSACTION`
     : `SCAN TO CREATE WALLET`;
 
-  const resolveFaceData = () => {
+  const resolveFaceData = (faceData: string) => {
     if (!address) {
       //create wallet
-      // const account = connectToWallet('', '');
+      const account = connectToWallet(faceData);
+      console.log('account___', { account });
+      setEvmAddress(account.address);
       // setPublicKey(account.address);
       setView('qrCamera');
     } else {
       //call send transaction
+      signMessage(faceData);
+      setView('successs');
     }
   };
 
@@ -68,7 +61,11 @@ const FaceScan: React.FC<Props> = (props) => {
         <LinearGradient colors={['rgba(0,0,0,0.8)', 'transparent']} />
         <Text style={styles.text}>{message}</Text>
         <Space h={3} />
-        {!isWeb && <Camera style={styles.camera} type={type}></Camera>}
+        {isWeb ? (
+          <Webcam style={styles.camera} />
+        ) : (
+          <Camera style={styles.camera} type={type}></Camera>
+        )}
         <Space h={25} />
         <View style={styles.center}>
           <Image
@@ -84,7 +81,7 @@ const FaceScan: React.FC<Props> = (props) => {
           <Pressable onPress={() => setView('home')}>
             <Text style={styles.text}>Back</Text>
           </Pressable>
-          <Pressable onPress={() => setView('home')}>
+          <Pressable onPress={() => resolveFaceData('123')}>
             <Text style={styles.text}>Complete</Text>
           </Pressable>
         </View>
