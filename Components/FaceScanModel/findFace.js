@@ -1,9 +1,8 @@
 import * as Facemesh from '@mediapipe/face_mesh';
-import { stringToHex } from 'viem';
 
-const PRECISION = 5;
+const PRECISION = 4; // lower makes matching your face over-and-over easier
+const POINTS_TRAIN = 100; // more is better sampling, but more data
 const THRESHOLD = 100;
-const POINTS_TRAIN = 50;
 
 const CAMERA_WIDTH = 300;
 const CAMERA_HEIGHT = 300;
@@ -269,17 +268,6 @@ function calculateDistance(vertex1, vertex2) {
   );
   return distance.toFixed(PRECISION);
 }
-
-const exportData = (data, name) => {
-  const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
-    JSON.stringify(data),
-  )}`;
-  const link = document.createElement('a');
-  link.href = jsonString;
-  link.download = name + '.json';
-
-  link.click();
-};
 
 const hashData = (disEyes, disEleftM, disLeftM, areaLE, areaRE, areaM) => {
   const hashStr =

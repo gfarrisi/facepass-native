@@ -192,7 +192,7 @@ const FaceScan: React.FC<Props> = (props) => {
           <Space h={35} />
           <View style={styles.center}>
             <Logo size={160} />
-            <View style={styles.flex}>
+            {/* <View style={styles.flex}>
               <Pressable
                 onPress={() => {
                   if (!address) {
@@ -203,7 +203,7 @@ const FaceScan: React.FC<Props> = (props) => {
               >
                 <Text style={styles.text}>Complete</Text>
               </Pressable>
-            </View>
+            </View> */}
           </View>
         </View>
 

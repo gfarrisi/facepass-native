@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
     padding: 10,
-    color: '#079697',
+    color: '#806372',
     backgroundColor: 'white',
     borderRadius: 5,
   },
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   buttonContainer: {},
   button: {},
   submitButton: {
-    backgroundColor: '#079697',
+    backgroundColor: '#CA9CB4',
   },
 });
 

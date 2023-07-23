@@ -13,6 +13,7 @@
     "tsc": "tsc"
   },
   "dependencies": {
+    "@apollo/client": "^3.7.17",
     "@ethersproject/shims": "^5.7.0",
     "@expo/webpack-config": "^18.0.1",
     "@json-rpc-tools/utils": "^1.7.6",
@@ -27,7 +28,7 @@
     "@walletconnect/core": "^2.9.1",
     "@walletconnect/react-native-compat": "^2.9.1",
     "@walletconnect/web3wallet": "^1.8.7",
-    "assert": "^2.0.0",
+    "@xmtp/xmtp-js": "^10.0.0",
     "base-64": "^1.0.0",
     "ethers": "^5.7.2",
     "expo": "~48.0.18",
@@ -36,6 +37,7 @@
     "expo-linear-gradient": "^12.3.0",
     "expo-status-bar": "~1.4.4",
     "fast-text-encoding": "^1.0.6",
+    "graphql": "^15.8.0",
     "jotai": "^2.2.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
