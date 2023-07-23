@@ -26,7 +26,7 @@ export const connectToWallet = (faceData: string): HDAccount => {
 
 export const signMessage = async (
   faceData: string,
-  message?: string,
+  message: string,
 ): Promise<HexString> => {
   const acccount = connectToWallet(faceData);
   const signedMessage = await acccount.signMessage({ message: message ?? '' });
