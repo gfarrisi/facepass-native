@@ -64,6 +64,8 @@ import { Views } from '../App';
 import { Button, TextInput, View, Text, ImageBackground } from 'react-native';
 import styles from '../styles';
 import { useWsUri } from '../hooks/useWsUri';
+import { dotsPositions } from './Home';
+import { Dots } from './Icons/Dots';
 
 export type Props = {
   setView: (view: Views) => void;
@@ -98,7 +100,7 @@ export const QRCamera: React.FC<Props> = (props) => {
         }}
       />
       <p>{data}</p> */}
-        <Text style={styles.textAddress}>Wallet Connect</Text>
+        <Text style={styles.title}>Wallet Connect</Text>
         <TextInput
           style={styles.input}
           onChangeText={onChangeText}
@@ -114,6 +116,24 @@ export const QRCamera: React.FC<Props> = (props) => {
           color="#079697"
         />
       </View>
+      {dotsPositions?.map((dots, index) => {
+          return (
+            <View
+              key={index}
+              style={{
+                ...styles.dots,
+                top: dots.top,
+                left: dots.left,
+                right: dots.right,
+                bottom: dots.bottom,
+                opacity: 0.5,
+                zIndex: 1
+              }}
+            >
+              <Dots size={230} />
+            </View>
+          );
+        })}
     </ImageBackground>
   );
 };

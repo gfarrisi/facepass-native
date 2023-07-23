@@ -29,6 +29,14 @@ const styles = StyleSheet.create({
     padding: 5,
     opacity: 0.5,
   },
+  title: {
+    color: 'white',
+    fontFamily: 'helvetica',
+    fontSize: 20,
+    padding: 30,
+    // fontWeight: '600',
+    zIndex: 10,
+  },
   logo: {
     width: 166,
     height: 166,

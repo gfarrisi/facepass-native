@@ -16,6 +16,8 @@ import { Icon } from './Icons/Icon';
 import { Logo } from './Icons/Logo';
 import { useEvmAddress } from '../hooks/useEvmAddress';
 import Space from './Space';
+import { dotsPositions } from './Home';
+import { Dots } from './Icons/Dots';
 
 const LoadingText = () => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -79,6 +81,7 @@ export const Waiting: React.FC<Props> = (props) => {
             <Text style={styles.text}>Incoming message</Text>
           </Pressable>
         </View>
+        
       </ImageBackground>
     </>
   );
