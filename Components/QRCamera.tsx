@@ -113,7 +113,7 @@ export const QRCamera: React.FC<Props> = (props) => {
             setView('waiting');
           }}
           title="connect"
-          color="#079697"
+          color="#CA9CB4"
         />
       </View>
       {dotsPositions?.map((dots, index) => {
