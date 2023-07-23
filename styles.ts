@@ -25,6 +25,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     // fontWeight: '600',
     zIndex: 10,
+    backgroundColor: 'black',
+    padding: 5,
+    opacity: 0.5,
   },
   logo: {
     width: 166,
@@ -70,10 +73,20 @@ const styles = StyleSheet.create({
     // or 'stretch'
   },
   banner: {
-    backgroundColor: '#858084',
+    // backgroundColor: '#858084',
     padding: 20,
     alignItems: 'center',
     justifyContent: 'center',
+    opacity: 0.7,
+
+    // zIndex:
+  },
+  bannerDark: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    opacity: 0.7,
+    backgroundColor: 'black',
+    padding: 5,
   },
   linearGradient: {
     flex: 1,

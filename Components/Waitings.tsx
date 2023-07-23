@@ -1,5 +1,5 @@
 //component to tell the user they have been connected and we are waiitng
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Text,
   View,
@@ -7,6 +7,8 @@ import {
   Button,
   Pressable,
   ImageBackground,
+  Animated,
+  Easing,
 } from 'react-native';
 import { Views } from '../App';
 import styles from '../styles';
@@ -14,6 +16,37 @@ import { Icon } from './Icons/Icon';
 import { Logo } from './Icons/Logo';
 import { useEvmAddress } from '../hooks/useEvmAddress';
 import Space from './Space';
+
+const LoadingText = () => {
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(fadeAnim, {
+          toValue: 1,
+          duration: 1000,
+          useNativeDriver: true,
+          easing: Easing.linear,
+        }),
+        Animated.timing(fadeAnim, {
+          toValue: 0,
+          duration: 1000,
+          useNativeDriver: true,
+          easing: Easing.linear,
+        }),
+      ]),
+    ).start();
+  }, []);
+
+  return (
+    <Animated.View style={[styles.banner, { opacity: fadeAnim }]}>
+      <Text style={{ ...styles.text, fontWeight: '500', fontSize: 17 }}>
+        WAITING FOR TRANSACTION
+      </Text>
+    </Animated.View>
+  );
+};
 
 export type Props = {
   setView: (view: Views) => void;
@@ -33,12 +66,8 @@ export const Waiting: React.FC<Props> = (props) => {
           <Icon size={150} />
           <Logo size={150} />
         </View>
-
-        <View style={styles.banner}>
-          <Text style={styles.text}>WAITING FOR TRANSACTION</Text>
-        </View>
-        <Space h={2} />
-        <View style={styles.flex}>
+        <LoadingText />
+        <View style={styles.bannerDark}>
           <Text style={styles.textAddress}>{address}</Text>
         </View>
         <Space h={6} />
