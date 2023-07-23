@@ -7,7 +7,6 @@ interface InitialState {
   wsUri: string;
   wallet: IWeb3Wallet | null;
   session: SessionTypes.Struct | null;
-  evmAddress: string | null;
   isInitialized: boolean;
   isLoading: boolean;
 }
@@ -27,10 +26,6 @@ export const setSession = createAction<
 
 export const setWsUri = createAction<string, 'setWsUri'>('setWsUri');
 
-export const setEvmAddress = createAction<string | null, 'setEvmAddress'>(
-  'setEvmAddress',
-);
-
 export const setIsInitialized = createAction<boolean, 'setIsInitialized'>(
   'setIsInitialized',
 );
@@ -40,7 +35,6 @@ const initialState: InitialState = {
   isLoading: false,
   wallet: null,
   session: null,
-  evmAddress: null,
   isInitialized: false,
 };
 
@@ -54,9 +48,6 @@ export const sessionSlice = createReducer(initialState, (builder) => {
     })
     .addCase(setWallet, (state, action) => {
       state.wallet = action.payload;
-    })
-    .addCase(setEvmAddress, (state, action) => {
-      state.evmAddress = action.payload;
     })
     .addCase(setIsLoading, (state, action) => {
       state.isLoading = action.payload;

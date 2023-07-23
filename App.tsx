@@ -7,9 +7,10 @@ import FaceMeshWeb from './Components/FaceScanModel/FaceMeshWeb';
 import FaceScanModel from './Components/FaceScanModel';
 
 import AppProvider from './providers/AppProvider';
-import { QRCamera } from './Components/Camera';
+// import FaceScan from './Components/FaceScan';
+import { QRCamera } from './Components/QRCamera';
 
-export type Views = 'home' | 'qrCamera' | 'frontCamera' | 'sucesss';
+export type Views = 'home' | 'qrCamera' | 'frontCamera' | 'waiting' | 'sucesss';
 
 const App: React.FC = () => {
   const [view, setView] = useState<Views>('frontCamera');
@@ -20,9 +21,9 @@ const App: React.FC = () => {
       ) : view === 'qrCamera' ? (
         <QRCamera setView={setView} />
       ) : view === 'frontCamera' ? (
-        <>
-          <FaceMeshWeb />
-        </>
+        <FaceScan setView={setView} />
+      ) : view === 'waiting' ? (
+        <FaceScan setView={setView} />
       ) : (
         <></>
       )}
