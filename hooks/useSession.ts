@@ -5,14 +5,16 @@ import { Web3Wallet } from '@walletconnect/web3wallet';
 import { Core } from '@walletconnect/core';
 import { getSdkError, parseUri } from '@walletconnect/utils';
 
-import useTransaction from './useTransaction';
 import {
   setIsInitialized,
   setSession,
   setWallet,
   setWsUri,
 } from '../redux/slices/session';
+import { signMessage } from '../utils/convertFaceDataToWallet';
+import { JsonRpcResponse } from '@json-rpc-tools/utils';
 import { useEvmAddress } from './useEvmAddress';
+import useTransaction from './useTransaction';
 
 const WCMetadata = {
   name: 'FACE PASS',
@@ -99,26 +101,29 @@ const useSession = () => {
       const { topic, params, id } = event;
       const { request } = params;
       const { method } = request;
-      console.log(method);
-      if (method === 'eth_sendTransaction') {
+      if (method === 'eth_personalSign') {
         try {
           dispatch(setIsLoadingTransaction(true));
 
           if (txError) dispatch(setTransactionError(''));
           if (transactionSignature) dispatch(setTransactionSignature(''));
 
-          const txSignature = await sendTransaction({
-            from: '0x',
-            to: '0x',
-            data: '0x',
-          });
+          const message = params.request.params[0];
+          console.log({ message });
+          // const txSignature = wallet.
+          const txSignature = await signMessage('123', message);
 
+          const response: JsonRpcResponse = {
+            id,
+            jsonrpc: '2.0',
+            result: txSignature,
+          };
           await wallet.respondSessionRequest({
             topic,
-            response: txSignature,
+            response,
           });
 
-          dispatch(setTransactionSignature(txSignature.result));
+          // dispatch(setTransactionSignature(txSignature.result));
         } catch (err) {
           const errMessage =
             '❌ Failed to Sign Transaction. Please try again later.';

@@ -20,7 +20,7 @@ export const useEvmAddress = () => {
     address,
     setEvmAddress,
     getEvmAddress: async () => {
-     /*  const storedAddress = await AsyncStorage.getItem('@evm_address');
+      /*  const storedAddress = await AsyncStorage.getItem('@evm_address');
       setEvmAddress(storedAddress); */
       return connectToWallet('123').address;
     },
