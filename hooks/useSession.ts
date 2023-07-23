@@ -54,6 +54,7 @@ const useSession = () => {
   const wallet = useSelector((state: RootState) => state.session.wallet);
 
   const wsUri = useSelector((state: RootState) => state.session.wsUri);
+  console.log({ wsUri });
 
   const reset = () => {
     deleteEvmAddress();

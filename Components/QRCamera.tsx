@@ -60,7 +60,6 @@
 // });
 
 import React, { useState } from 'react';
-// import { QrReader } from 'react-qr-reader';
 import { Views } from '../App';
 import { Button, TextInput, View, Text } from 'react-native';
 import styles from '../styles';
