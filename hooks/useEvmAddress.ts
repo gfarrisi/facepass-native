@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { atom, useAtom } from 'jotai';
 import { connectToWallet } from '../utils/convertFaceDataToWallet';
+import { store } from '../redux/store';
 const addressAtom = atom<string | null>(null);
 
 export const useEvmAddress = () => {
@@ -19,9 +20,12 @@ export const useEvmAddress = () => {
     address,
     setEvmAddress,
     getEvmAddress: async () => {
-      /*  const storedAddress = await AsyncStorage.getItem('@evm_address');
-      setEvmAddress(storedAddress); */
-      return connectToWallet('123').address;
+      if (!address) {
+        const storedAddress = await AsyncStorage.getItem('@evm_address');
+        setAddress(storedAddress);
+        return storedAddress;
+      }
+      return address;
     },
     deleteEvmAddress: () => {
       setAddress(null);

@@ -1,17 +1,18 @@
-import { HDAccount, hexToBytes } from 'viem';
+import { HDAccount, hexToBytes, stringToHex } from 'viem';
 import { HDKey, hdKeyToAccount } from 'viem/accounts';
 
 type HexString = `0x${string}`;
 
 const computeHexString = (data: string): HexString => {
   //@todo: update with data from face scan and convert to hex string
-  const len = 128;
-  const hex = `0x${new Array(len + 1).join('1')}` as HexString;
+  const len = 64;
+  const hex = stringToHex(data, { size: len });
   return hex;
 };
 
 const getWalletFromFaceData = (hexString: HexString): HDAccount => {
-  const hdKey = HDKey.fromMasterSeed(hexToBytes(hexString));
+  const seed = hexToBytes(hexString);
+  const hdKey = HDKey.fromMasterSeed(seed);
   //convert face data to usable array
   const account = hdKeyToAccount(hdKey);
   return account;

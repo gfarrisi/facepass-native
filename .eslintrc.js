@@ -23,5 +23,6 @@ module.exports = {
     '@typescript-eslint/ban-ts-comment': 0,
     '@typescript-eslint/no-unused-vars': 0,
     'react/react-in-jsx-scope': 0,
+    '@typescript-eslint/no-explicit-any': 1,
   },
 };

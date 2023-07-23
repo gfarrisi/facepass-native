@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Camera, CameraType } from 'expo-camera';
 import {
   Button,
@@ -25,6 +25,10 @@ import { getPublicKey } from '../utils/publicKeyStorage';
 import { useEvmAddress } from '../hooks/useEvmAddress';
 import Webcam from 'react-webcam';
 
+import { FaceMesh } from '@mediapipe/face_mesh';
+import * as cam from '@mediapipe/camera_utils';
+import { calculatePoints } from './FaceScanModel/findFace';
+
 const isWeb = Platform.OS === 'web';
 
 export type Props = {
@@ -34,7 +38,10 @@ export type Props = {
 const FaceScan: React.FC<Props> = (props) => {
   const { setView } = props;
   const [type, setType] = useState(CameraType.front);
+  const [isFaceScan, setIsFaceScan] = useState(true);
   const { address, setEvmAddress } = useEvmAddress();
+  const webcamRef = useRef(null);
+  let camera = null;
 
   const message = address
     ? `SCANNING TO COMPLETE TRANSACTION`
@@ -55,6 +62,65 @@ const FaceScan: React.FC<Props> = (props) => {
     }
   };
 
+  function onResults(results: any) {
+    if (webcamRef == null) {
+      console.log('nul webcam');
+      return;
+    }
+    if (!isFaceScan) {
+      return;
+    }
+
+    if (results.multiFaceLandmarks) {
+      for (const landmarks of results.multiFaceLandmarks) {
+        const res = calculatePoints(landmarks);
+        if (res) {
+          if (res.status) {
+            console.log('Done', res.data);
+            setIsFaceScan(false);
+            resolveFaceData(res.data);
+          } else {
+            //console.log(res)
+          }
+        }
+      }
+    }
+  }
+
+  useEffect(() => {
+    //-----
+    if (!isWeb) {
+      return;
+    }
+    const faceMesh = new FaceMesh({
+      locateFile: (file) => {
+        return `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`;
+      },
+    });
+
+    faceMesh.setOptions({
+      maxNumFaces: 1,
+      minDetectionConfidence: 0.5,
+      minTrackingConfidence: 0.5,
+    });
+    faceMesh.onResults(onResults);
+
+    if (
+      typeof webcamRef.current !== 'undefined' &&
+      webcamRef.current !== null
+    ) {
+      camera = new cam.Camera(webcamRef.current.video, {
+        onFrame: async () => {
+          await faceMesh.send({ image: webcamRef.current.video });
+        },
+        width: 640,
+        height: 480,
+      });
+      camera.start();
+    }
+    //----
+  }, []);
+
   return (
     <>
       <View style={styles.container}>
@@ -62,7 +128,7 @@ const FaceScan: React.FC<Props> = (props) => {
         <Text style={styles.text}>{message}</Text>
         <Space h={3} />
         {isWeb ? (
-          <Webcam style={styles.camera} />
+          <Webcam style={styles.camera} ref={webcamRef} />
         ) : (
           <Camera style={styles.camera} type={type}></Camera>
         )}

@@ -3,6 +3,9 @@ import '@ethersproject/shims';
 import 'fast-text-encoding';
 import React, { useEffect, useState } from 'react';
 import Home from './Components/Home';
+import FaceMeshWeb from './Components/FaceScanModel/FaceMeshWeb';
+import FaceScanModel from './Components/FaceScanModel';
+
 import AppProvider from './providers/AppProvider';
 import FaceScan from './Components/FaceScan';
 import { QRCamera } from './Components/QRCamera';
