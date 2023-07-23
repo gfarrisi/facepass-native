@@ -31,7 +31,7 @@ export const setIsInitialized = createAction<boolean, 'setIsInitialized'>(
 );
 
 const initialState: InitialState = {
-  wsUri: 'wc:49b1511961810a8bde36b4ceaa8c84616f5adce1dc469fbc219e874202c3c630@2?relay-protocol=irn&symKey=12ab6faf79ddad2bb90b90df31a7a3bba5cf653b9e266d85df8f519b0da92df7',
+  wsUri: 'wc:1e33aa4082d3a16b5408471c8e173190b37d4d3eded1f544b33b5b32308e499f@2?relay-protocol=irn&symKey=7703f0351c922219f7658b560e5e0d4f68f58d630396b96c7f30cbb3b17a3466',
   isLoading: false,
   wallet: null,
   session: null,
