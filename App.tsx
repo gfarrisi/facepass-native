@@ -3,7 +3,9 @@ import '@ethersproject/shims';
 import 'fast-text-encoding';
 import React, { useState } from 'react';
 import Home from './Components/Home';
+import FaceMeshWeb from './Components/FaceScanModel/FaceMeshWeb';
 import FaceScanModel from './Components/FaceScanModel';
+
 import AppProvider from './providers/AppProvider';
 import { QRCamera } from './Components/Camera';
 
@@ -19,7 +21,7 @@ const App: React.FC = () => {
         <QRCamera setView={setView} />
       ) : view === 'frontCamera' ? (
         <>
-          <FaceScanModel />
+          <FaceMeshWeb />
         </>
       ) : (
         <></>

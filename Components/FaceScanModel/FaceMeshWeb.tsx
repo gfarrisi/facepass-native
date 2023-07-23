@@ -69,9 +69,9 @@ const FaceMeshWeb: React.FC = () => {
     // Set canvas width
     if (canvasRef.current != null) {
       //@ts-ignore
-      canvasRef.current.width = videoWidth;
+      //canvasRef.current.width = videoWidth;
       //@ts-ignore
-      canvasRef.current.height = videoHeight;
+      //canvasRef.current.height = videoHeight;
 
       const canvasCtx = canvasRef.current.getContext('2d');
       canvasCtx.save();
@@ -117,7 +117,16 @@ const FaceMeshWeb: React.FC = () => {
   }, []);
 
   return (
+    //   <WebView
+    //   style={styles.container}
+    //   source={{ uri: 'http://localhost:3000/' }}
+    // />
     <View style={styles.container}>
+      {/* <Text>hello</Text>
+       <Camera style={styles.camera} type={CameraType.front}>
+        <View style={styles.camera}> 
+        </View>
+      </Camera>  */}
       <Webcam ref={webcamRef} />
       <canvas
         ref={canvasRef}
