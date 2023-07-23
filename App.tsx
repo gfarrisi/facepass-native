@@ -21,7 +21,7 @@ export type Views =
   | 'successs';
 
 const App: React.FC = () => {
-  const [view, setView] = useState<Views>('waiting');
+  const [view, setView] = useState<Views>('frontCamera');
   const { address } = useEvmAddress();
 
   useEffect(() => {
