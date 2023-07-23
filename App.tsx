@@ -7,7 +7,7 @@ import FaceMeshWeb from './Components/FaceScanModel/FaceMeshWeb';
 import FaceScanModel from './Components/FaceScanModel';
 
 import AppProvider from './providers/AppProvider';
-// import FaceScan from './Components/FaceScan';
+import FaceScan from './Components/FaceScan';
 import { QRCamera } from './Components/QRCamera';
 import { Waiting } from './Components/Waitings';
 import { Success } from './Components/Success';
