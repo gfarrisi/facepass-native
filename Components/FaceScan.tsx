@@ -30,7 +30,11 @@ import { Animated } from 'react-native';
 
 import { FaceMesh } from '@mediapipe/face_mesh';
 import * as cam from '@mediapipe/camera_utils';
-import { calculatePoints } from './FaceScanModel/findFace';
+import { Reset, calculatePoints } from './FaceScanModel/findFace';
+import { JsonRpcResponse } from '@json-rpc-tools/utils';
+import { id } from 'ethers/lib/utils';
+import useSession from '../hooks/useSession';
+import { useEvent } from '../hooks/useEvent';
 
 const isWeb = Platform.OS === 'web';
 
@@ -72,12 +76,17 @@ export type Props = {
 };
 
 const FaceScan: React.FC<Props> = (props) => {
+  const { wallet } = useSession();
   const { setView } = props;
   const [type, setType] = useState(CameraType.front);
   const [isFaceScan, setIsFaceScan] = useState(true);
   const { address, setEvmAddress } = useEvmAddress();
+  const { event } = useEvent();
   const webcamRef = useRef(null);
   let camera = null;
+  useEffect(() => {
+    Reset();
+  }, []);
 
   const message = address
     ? `SCANNING TO COMPLETE TRANSACTION`
@@ -92,9 +101,31 @@ const FaceScan: React.FC<Props> = (props) => {
       // setPublicKey(account.address);
       setView('qrCamera');
     } else {
-      //call send transaction
-      signMessage(faceData);
-      setView('successs');
+      (async () => {
+        if (!wallet) {
+          throw new Error('wallet missing');
+        }
+        if (!event) {
+          throw new Error('event missing');
+        }
+        //call send transaction
+        // signMessage(faceData);
+        const txSignature = await signMessage(faceData, message);
+
+        const response: JsonRpcResponse = {
+          id: event.id,
+          jsonrpc: '2.0',
+          result: txSignature,
+        };
+        wallet
+          .respondSessionRequest({
+            topic: event.topic,
+            response,
+          })
+          .then(() => {
+            setView('success');
+          });
+      })();
     }
   };
 
@@ -168,7 +199,7 @@ const FaceScan: React.FC<Props> = (props) => {
           <Text style={styles.text}>{message}</Text>
           <Space h={3} />
           {isWeb ? (
-            <Webcam style={styles.camera} />
+            <Webcam style={styles.camera} ref={webcamRef} />
           ) : (
             <Camera style={styles.camera} type={type}></Camera>
           )}
