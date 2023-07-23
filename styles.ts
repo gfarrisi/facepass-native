@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
     color: 'white',
     position: 'relative',
     zIndex: 1,
+    overflow: 'hidden'
     // backgroundImage: './../assets/blur.png'
   },
   text: {
